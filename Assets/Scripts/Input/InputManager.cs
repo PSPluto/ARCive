@@ -1,10 +1,18 @@
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
+    
     private GameInputActions input;
-
+    public bool CanMove { get; set; } = true;
+    public bool CanFire { get; set; } = true;
+    public bool CanReload { get; set; } = true;
+    public bool CanInteract { get; set; } = true;
+    public bool CanAim { get; set; } = true;
+    
+    
     private void Awake()
     {
         Instance = this;
@@ -22,25 +30,24 @@ public class InputManager : MonoBehaviour
         input.Disable();
     }
     
-    // Player Input
-
+    // プレイヤー
     public Vector2 Move =>
-        input.Player.Move.ReadValue<Vector2>();
+        CanMove ?input.Player.Move.ReadValue<Vector2>() : Vector2.zero;
 
     public bool Fire =>
-        input.Player.Fire.IsPressed();
+        CanFire && input.Player.Fire.IsPressed();
 
     public bool Aim =>
-        input.Player.Aim.IsPressed();
+        CanAim && input.Player.Aim.IsPressed();
 
     public bool Reload =>
-        input.Player.Reload.WasPressedThisFrame();
+        CanReload && input.Player.Reload.WasPressedThisFrame();
 
     public bool Interact =>
-        input.Player.Interact.WasPressedThisFrame();
+        CanInteract && input.Player.Interact.WasPressedThisFrame();
     
     
-    // Input Control
+    // 制御
     public void SetPlayerInput(bool enabled)
     {
         if (enabled)
