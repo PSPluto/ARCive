@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("参照")]
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private PlayerAnimater animator;
+    [SerializeField] private PlayerAnimator animator;
     [Header("移動設定")]
     [SerializeField] private float maxMoveSpeed = 5.0f;
     [SerializeField] private float rotationSpeed = 10.0f;

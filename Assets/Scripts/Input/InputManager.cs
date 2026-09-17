@@ -12,6 +12,8 @@ public class InputManager : MonoBehaviour
     public bool CanInteract { get; set; } = true;
     public bool CanAim { get; set; } = true;
     
+    public bool CanCloseUi { get; set; } = true;
+    
     
     private void Awake()
     {
@@ -31,20 +33,33 @@ public class InputManager : MonoBehaviour
     }
     
     // プレイヤー
-    public Vector2 Move =>
-        CanMove ?input.Player.Move.ReadValue<Vector2>() : Vector2.zero;
 
-    public bool Fire =>
-        CanFire && input.Player.Fire.IsPressed();
-
-    public bool Aim =>
-        CanAim && input.Player.Aim.IsPressed();
-
-    public bool Reload =>
-        CanReload && input.Player.Reload.WasPressedThisFrame();
-
-    public bool Interact =>
-        CanInteract && input.Player.Interact.WasPressedThisFrame();
+    public void AllPlayerInputDisabled()
+    {
+        CanMove = false;
+        CanFire = false;
+        CanReload = false;
+        CanInteract = false;
+        CanAim = false;
+    }
+    public void AllPlayerInputEnabled()
+    {
+        CanMove = true;
+        CanFire = true;
+        CanReload = true;
+        CanInteract = true;
+        CanAim = true;
+    }
+    
+    public Vector2 Move => CanMove ?input.Player.Move.ReadValue<Vector2>() : Vector2.zero;
+    public bool Fire => CanFire && input.Player.Fire.IsPressed();
+    public bool Aim => CanAim && input.Player.Aim.IsPressed();
+    public bool Reload => CanReload && input.Player.Reload.WasPressedThisFrame();
+    public bool Interact => CanInteract && input.Player.Interact.WasPressedThisFrame();
+    
+    // UI
+    public bool CloseUi => CanCloseUi && input.Player.UIClose.WasPressedThisFrame();
+        
     
     
     // 制御

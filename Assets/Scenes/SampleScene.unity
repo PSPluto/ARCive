@@ -531,7 +531,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6087604, y: -0, z: -0, w: 0.7933541}
-  m_LocalPosition: {x: 0, y: 4, z: -2}
+  m_LocalPosition: {x: 0, y: 5, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -756,6 +756,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 1eb3f90c2a8cf744982648fa4f8c5950, type: 3}
+    - target: {fileID: -2001496963424984923, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 1eb3f90c2a8cf744982648fa4f8c5950, type: 3}
     - target: {fileID: 919132149155446097, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
       propertyPath: m_Name
       value: crate_A
@@ -768,6 +776,16 @@ PrefabInstance:
 --- !u!4 &494026724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
+  m_PrefabInstance: {fileID: 494026723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &494026725 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
+  m_PrefabInstance: {fileID: 494026723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &659064104 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2001496963424984923, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
   m_PrefabInstance: {fileID: 494026723}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &683729001
@@ -892,6 +910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 706255639}
   - component: {fileID: 706255640}
+  - component: {fileID: 706255641}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Untagged
@@ -936,6 +955,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.3, z: 0.8}
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!114 &706255641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706255638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3077db1e3047008465b3e6f9f4ec72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseCrate
+  targetRenderers:
+  - {fileID: 494026725}
+  - {fileID: 659064104}
+  isHighlight: 0
 --- !u!1 &751155113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1265,7 @@ MonoBehaviour:
   animator: {fileID: 123372021}
   maxMoveSpeed: 3
   rotationSpeed: 10
-  acceleration: 8
+  acceleration: 10
 --- !u!54 &844013025
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1293,9 +1328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029e9509235dbb748a1fc82b8632ede4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractManager
-  radius: 0.4
-  offset: {x: 0, y: 0.45, z: 0}
-  distanceOffset: 0.65
+  radius: 0.2
+  offset: {x: 0, y: 0.3, z: 0}
+  distanceOffset: 0.45
+  playerAnimator: {fileID: 123372021}
 --- !u!1 &1405364692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,7 +1635,7 @@ GameObject:
   - component: {fileID: 2116234089}
   - component: {fileID: 2116234088}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: World
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1704,12 +1740,12 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 2116234091}
   - {fileID: 1908838207}
   - {fileID: 751155116}
+  - {fileID: 330585546}
   - {fileID: 844013022}
   - {fileID: 1405364693}
   - {fileID: 706255639}
