@@ -11,8 +11,10 @@ public class InputManager : MonoBehaviour
     public bool CanReload { get; set; } = true;
     public bool CanInteract { get; set; } = true;
     public bool CanAim { get; set; } = true;
+    public bool CanDash { get; set; } = true;
     
     public bool CanCloseUi { get; set; } = true;
+    
     
     
     private void Awake()
@@ -41,6 +43,7 @@ public class InputManager : MonoBehaviour
         CanReload = false;
         CanInteract = false;
         CanAim = false;
+        CanDash = false;
     }
     public void AllPlayerInputEnabled()
     {
@@ -49,6 +52,7 @@ public class InputManager : MonoBehaviour
         CanReload = true;
         CanInteract = true;
         CanAim = true;
+        CanDash = true;
     }
     
     public Vector2 Move => CanMove ?input.Player.Move.ReadValue<Vector2>() : Vector2.zero;
@@ -56,6 +60,7 @@ public class InputManager : MonoBehaviour
     public bool Aim => CanAim && input.Player.Aim.IsPressed();
     public bool Reload => CanReload && input.Player.Reload.WasPressedThisFrame();
     public bool Interact => CanInteract && input.Player.Interact.WasPressedThisFrame();
+    public bool Dash => CanDash && input.Player.Dash.IsPressed();
     
     // UI
     public bool CloseUi => CanCloseUi && input.Player.UIClose.WasPressedThisFrame();
