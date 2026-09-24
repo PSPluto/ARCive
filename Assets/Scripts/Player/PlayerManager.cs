@@ -6,23 +6,22 @@ using UnityEngine;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    // -- 参照
+    // ==================== 参照 ====================
     [SerializeField] private InputReader input;
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerCombat combat;
     [SerializeField] private PlayerHealth health;
-
     [SerializeField] private StateSettingsDatabase stateSettingsDatabase;
-    
-    // -- PlayerState
-    public PlayerState CurrentState { get; private set; } =  PlayerState.Normal;
+
+    // ==================== State ====================
+    public PlayerState CurrentState { get; private set; } = PlayerState.Normal;
+
     private Func<PlayerStateSettings> _stateSetting;
-    
-    // -- input
-    public bool CanMove { get; private  set; } = true;
 
-    // -- 初期化
+    // ==================== Input ====================
+    public bool CanMove { get; private set; } = true;
 
+    // ==================== 初期化 ====================
     private void Awake()
     {
         _stateSetting = () => stateSettingsDatabase.Get(CurrentState);
@@ -38,7 +37,7 @@ public class PlayerManager : MonoBehaviour
         health.Died -= OnDied;
     }
 
-    // -- メイン
+    // ==================== メインループ ====================
     private void Update()
     {
         // 移動
@@ -48,13 +47,18 @@ public class PlayerManager : MonoBehaviour
         {
             Fire();
         }
-
+        // インタラクト
         if (input.Interact)
         {
             Interact();
         }
     }
 
+    // ==================== 子の機能呼び出し ====================
+
+    /// <summary>
+    /// インタラクト
+    /// </summary>
     private void Interact()
     {
         if (_stateSetting().canInteract == false)
@@ -63,7 +67,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    // -- 子の機能
     /// <summary>
     /// 移動を呼ぶメソッド
     /// </summary>
@@ -73,20 +76,30 @@ public class PlayerManager : MonoBehaviour
         Vector3 direction3D = new Vector3(direction2D.x, 0f, direction2D.y);
         movement.Move(direction3D);
     }
+
+    /// <summary>
+    /// 銃の射撃
+    /// </summary>
     public void Fire()
     {
         if (_stateSetting().canInteract == false)
         {
             return;
         }
+
         combat.Fire();
     }
+    
+    /// <summary>
+    /// ダメージを受ける
+    /// </summary>
+    /// <param name="damage">ダメージ量</param>
     public void TakeDamage(int damage)
     {
         health.TakeDamage(damage);
     }
-    
-    // -- 自分の機能
+
+    // ==================== 自分の機能 ====================
     public void OnDied()
     {
         ChangeState(PlayerState.Dead);
@@ -96,8 +109,9 @@ public class PlayerManager : MonoBehaviour
     {
         CurrentState = newState;
     }
-    
-    // -- 設定
+
+    // ==================== 設定 ====================
+
     /// <summary>
     /// 移動を許可 / 拒否 の設定を更新
     /// </summary>
@@ -105,6 +119,4 @@ public class PlayerManager : MonoBehaviour
     {
         CanMove = enabled;
     }
-
-
 }
