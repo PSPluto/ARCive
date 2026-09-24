@@ -25,5 +25,6 @@ public class InputReader : MonoBehaviour
     // --- メイン --- //
 
     public Vector2 Move => _input.Player.Move.ReadValue<Vector2>();
-    public bool Fire => _input.Player.Fire.WasPressedThisFrame();
+    public bool Fire => _input.Player.Fire.IsPressed();
+    public bool Interact => _input.Player.Interact.WasPressedThisFrame();
 }

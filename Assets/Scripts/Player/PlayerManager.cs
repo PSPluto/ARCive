@@ -11,14 +11,23 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerCombat combat;
     [SerializeField] private PlayerHealth health;
+
+    [SerializeField] private StateSettingsDatabase stateSettingsDatabase;
     
     // -- PlayerState
-    public PlayerState currentState { get; private set; } =  PlayerState.Normal;
+    public PlayerState CurrentState { get; private set; } =  PlayerState.Normal;
+    private Func<PlayerStateSettings> _stateSetting;
     
     // -- input
     public bool CanMove { get; private  set; } = true;
 
     // -- 初期化
+
+    private void Awake()
+    {
+        _stateSetting = () => stateSettingsDatabase.Get(CurrentState);
+    }
+
     private void OnEnable()
     {
         health.Died += OnDied;
@@ -39,8 +48,21 @@ public class PlayerManager : MonoBehaviour
         {
             Fire();
         }
+
+        if (input.Interact)
+        {
+            Interact();
+        }
     }
-    
+
+    private void Interact()
+    {
+        if (_stateSetting().canInteract == false)
+        {
+            return;
+        }
+    }
+
     // -- 子の機能
     /// <summary>
     /// 移動を呼ぶメソッド
@@ -48,13 +70,15 @@ public class PlayerManager : MonoBehaviour
     /// <param name="direction2D">2Dの入力ベクトル</param>
     public void Move(Vector2 direction2D)
     {
-        if (CanMove) return;
-        
         Vector3 direction3D = new Vector3(direction2D.x, 0f, direction2D.y);
         movement.Move(direction3D);
     }
     public void Fire()
     {
+        if (_stateSetting().canInteract == false)
+        {
+            return;
+        }
         combat.Fire();
     }
     public void TakeDamage(int damage)
@@ -66,19 +90,17 @@ public class PlayerManager : MonoBehaviour
     public void OnDied()
     {
         ChangeState(PlayerState.Dead);
-        CanMove = false;
     }
 
     public void ChangeState(PlayerState newState)
     {
-        currentState = newState;
+        CurrentState = newState;
     }
     
     // -- 設定
     /// <summary>
     /// 移動を許可 / 拒否 の設定を更新
     /// </summary>
-    /// <param name="enabled">true = 許可、false = 拒否</param>
     public void SetMoveEnabled(bool enabled)
     {
         CanMove = enabled;
