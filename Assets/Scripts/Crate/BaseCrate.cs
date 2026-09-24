@@ -29,15 +29,15 @@ public class BaseCrate : MonoBehaviour
         isHighlight = false;
     }
 
-    public virtual void OnInteract(PlayerInteractManager playerInteractManager, PlayerAnimator playerAnimator)
-    {
-        playerAnimator.AssignInSearch(true);
-        InputManager.Instance.AllPlayerInputDisabled();
-    }
-
-    public virtual void OnDistract(PlayerAnimator playerAnimator)
-    {
-        playerAnimator.AssignInSearch(false);
-        InputManager.Instance.AllPlayerInputDisabled();
-    }
+    // public virtual void OnInteract(PlayerInteractManager playerInteractManager, PlayerAnimator playerAnimator)
+    // {
+    //     playerAnimator.AssignInSearch(true);
+    //     InputManager.Instance.AllPlayerInputDisabled();
+    // }
+    //
+    // public virtual void OnDistract(PlayerAnimator playerAnimator)
+    // {
+    //     playerAnimator.AssignInSearch(false);
+    //     InputManager.Instance.AllPlayerInputDisabled();
+    // }
 }
