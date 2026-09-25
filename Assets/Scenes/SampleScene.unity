@@ -937,6 +937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 706255639}
   - component: {fileID: 706255640}
+  - component: {fileID: 706255641}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Untagged
@@ -981,6 +982,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.3, z: 0.8}
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!114 &706255641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706255638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3ec46f20b04cc2ac772d611825ee63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Objects.BaseCrate
 --- !u!1 &751155113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,6 +1252,7 @@ GameObject:
   - component: {fileID: 844013029}
   - component: {fileID: 844013030}
   - component: {fileID: 844013031}
+  - component: {fileID: 844013032}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1259,6 +1273,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1548847347}
   - {fileID: 1574568369}
   - {fileID: 1948134650}
   m_Father: {fileID: 0}
@@ -1343,6 +1358,7 @@ MonoBehaviour:
   movement: {fileID: 844013027}
   combat: {fileID: 844013029}
   health: {fileID: 844013031}
+  interact: {fileID: 844013032}
   stateSettingsDatabase: {fileID: 844013030}
 --- !u!114 &844013029
 MonoBehaviour:
@@ -1386,6 +1402,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 100
+--- !u!114 &844013032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844013021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f555abe05cf43bea7b62b8923cec56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  rayStartPos: {fileID: 1548847347}
 --- !u!1 &1405364692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,6 +1446,37 @@ Transform:
   m_Children:
   - {fileID: 1972305671}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1548847346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1548847347}
+  m_Layer: 0
+  m_Name: PlayerHead
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1548847347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548847346}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.977, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 844013022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1574568368
 GameObject:

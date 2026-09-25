@@ -4,17 +4,18 @@ using UnityEngine;
 /// <summary>
 /// プレイヤーの全アクションの管理
 /// </summary>
-public class PlayerManager : MonoBehaviour
+public class Player : MonoBehaviour
 {
     // ==================== 参照 ====================
     [SerializeField] private InputReader input;
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerCombat combat;
     [SerializeField] private PlayerHealth health;
+    [SerializeField] private PlayerInteraction interact;
     [SerializeField] private StateSettingsDatabase stateSettingsDatabase;
 
     // ==================== State ====================
-    public PlayerState CurrentState { get; private set; } = PlayerState.Normal;
+    public PlayerState currentState { get; private set; } = PlayerState.Normal;
 
     // ==================== 初期化 ====================
     private void OnEnable()
@@ -42,6 +43,7 @@ public class PlayerManager : MonoBehaviour
         {
             Interact();
         }
+        Debug.Log(currentState);
     }
 
     // ==================== 子の機能呼び出し ====================
@@ -51,10 +53,13 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Interact()
     {
-        if (CurrentStateSettings.canInteract == false)
+        if (currentStateSettings.canInteract == false)
         {
             return;
         }
+        // インタラクトを実行、相手がステートの変更を要求してきたら変数にStateが入る。
+        var requestState =  interact.Interact();
+        ChangeState(requestState);
     }
 
     /// <summary>
@@ -63,7 +68,7 @@ public class PlayerManager : MonoBehaviour
     /// <param name="direction2D">2Dの入力ベクトル</param>
     public void Move(Vector2 direction2D)
     {
-        if (CurrentStateSettings.canMove == false)
+        if (currentStateSettings.canMove == false)
         {
             return;
         }
@@ -76,7 +81,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void Fire()
     {
-        if (CurrentStateSettings.canFire == false)
+        if (currentStateSettings.canFire == false)
         {
             return;
         }
@@ -99,14 +104,15 @@ public class PlayerManager : MonoBehaviour
         ChangeState(PlayerState.Dead);
     }
 
-    public void ChangeState(PlayerState newState)
+    public void ChangeState(PlayerState? newState)
     {
-        CurrentState = newState;
+        if (newState == null) return; 
+        currentState = (PlayerState)newState;
     }
 
-    private PlayerStateSettings CurrentStateSettings
+    private PlayerStateSettings currentStateSettings
     {
-        get => stateSettingsDatabase.Get(CurrentState);
+        get => stateSettingsDatabase.Get(currentState);
     }
     // ==================== 設定 ====================
 }

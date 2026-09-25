@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class BaseCrate : MonoBehaviour
+public class FocusHighlight : MonoBehaviour
 {
     private static readonly int IsHighlight = Shader.PropertyToID("_IsHighlight");
     [SerializeField] private Renderer[] targetRenderers;
@@ -28,16 +28,4 @@ public class BaseCrate : MonoBehaviour
         }
         isHighlight = false;
     }
-
-    // public virtual void OnInteract(PlayerInteractManager playerInteractManager, PlayerAnimator playerAnimator)
-    // {
-    //     playerAnimator.AssignInSearch(true);
-    //     InputManager.Instance.AllPlayerInputDisabled();
-    // }
-    //
-    // public virtual void OnDistract(PlayerAnimator playerAnimator)
-    // {
-    //     playerAnimator.AssignInSearch(false);
-    //     InputManager.Instance.AllPlayerInputDisabled();
-    // }
 }
