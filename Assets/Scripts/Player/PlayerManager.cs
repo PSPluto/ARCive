@@ -16,17 +16,7 @@ public class PlayerManager : MonoBehaviour
     // ==================== State ====================
     public PlayerState CurrentState { get; private set; } = PlayerState.Normal;
 
-    private Func<PlayerStateSettings> _stateSetting;
-
-    // ==================== Input ====================
-    public bool CanMove { get; private set; } = true;
-
     // ==================== 初期化 ====================
-    private void Awake()
-    {
-        _stateSetting = () => stateSettingsDatabase.Get(CurrentState);
-    }
-
     private void OnEnable()
     {
         health.Died += OnDied;
@@ -61,7 +51,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Interact()
     {
-        if (_stateSetting().canInteract == false)
+        if (CurrentStateSettings.canInteract == false)
         {
             return;
         }
@@ -73,6 +63,10 @@ public class PlayerManager : MonoBehaviour
     /// <param name="direction2D">2Dの入力ベクトル</param>
     public void Move(Vector2 direction2D)
     {
+        if (CurrentStateSettings.canMove == false)
+        {
+            return;
+        }
         Vector3 direction3D = new Vector3(direction2D.x, 0f, direction2D.y);
         movement.Move(direction3D);
     }
@@ -82,7 +76,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void Fire()
     {
-        if (_stateSetting().canInteract == false)
+        if (CurrentStateSettings.canFire == false)
         {
             return;
         }
@@ -110,13 +104,9 @@ public class PlayerManager : MonoBehaviour
         CurrentState = newState;
     }
 
-    // ==================== 設定 ====================
-
-    /// <summary>
-    /// 移動を許可 / 拒否 の設定を更新
-    /// </summary>
-    public void SetMoveEnabled(bool enabled)
+    private PlayerStateSettings CurrentStateSettings
     {
-        CanMove = enabled;
+        get => stateSettingsDatabase.Get(CurrentState);
     }
+    // ==================== 設定 ====================
 }
