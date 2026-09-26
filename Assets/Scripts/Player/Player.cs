@@ -57,9 +57,8 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        // インタラクトを実行、相手がステートの変更を要求してきたら変数にStateが入る。
-        var requestState =  interact.Interact();
-        ChangeState(requestState);
+        // インタラクトを実行
+        interact.Interact();
     }
 
     /// <summary>

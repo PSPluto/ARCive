@@ -3,41 +3,90 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    [SerializeField] private StateChangeRelay stateChangeRelay;
     // Rayのスタート位置
     [SerializeField] private Transform rayStartPos;
     // Rayの向きベクトルのyオフセット
     [SerializeField] private float rayDirectionYOffset = -0.5f;
     
     // ターゲットオブジェクトを保持する変数
-    private IInteraction _targetObject;
+    private GameObject _targetObj;
+    private TargetObjectData  _targetObjectData;
 
     
 
-    public PlayerState? Interact()
-    {   
-        Debug.Log("インタラクト");
-        return _targetObject?.RequestState;
+    public void Interact()
+    { 
+        if (_targetObj == null) return;
+        if (_targetObjectData.PlayerStateChangeRequester !=  null)
+        {
+            // いれた
+            _targetObjectData.PlayerStateChangeRequester.SetStateChangeRelay(stateChangeRelay);
+        }
+        
+        _targetObjectData.Interaction.Interact();
     }
 
     private void Update()
     {
-        _targetObject = FindInteractableObject();
+        if(FindInteractableObject(out _targetObj))
+        { 
+            // 値の更新   
+            _targetObjectData = GenInteractionTargetObjectData(_targetObj);
+        }
     }
 
-    private IInteraction FindInteractableObject()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="targetInteractableObject">結果のゲームオブジェクトが入る</param>
+    /// <returns>値に更新をかけるべきか</returns>
+    private bool FindInteractableObject( out GameObject targetInteractableObject )
     {
         Ray ray = new Ray(rayStartPos.position, (transform.forward + new Vector3(0, rayDirectionYOffset, 0)).normalized);
         Debug.DrawLine(rayStartPos.position, rayStartPos.position + (transform.forward + new Vector3(0, rayDirectionYOffset, 0)).normalized * 3f, Color.red);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 3f))
+        if (Physics.Raycast(ray, out var hit, 3f))
         {
-            Debug.unityLogger.Log($"インタラクト可能なオブジェクトを見つけました{hit.collider.gameObject.name}");
-            IInteraction hitInteraction = hit.collider.GetComponent<IInteraction>();
-            return hitInteraction;
+            // もし 直前に変数に上がっていたオブジェクトと同じであれば、即リターン
+            if (hit.collider.gameObject == _targetObj)
+            {
+                // Rayに当たったオブジェクトが以前通ったものと同じだった場合。
+                targetInteractableObject = hit.collider.gameObject;
+                return false;
+            };
+            
+            if (hit.collider.gameObject.TryGetComponent<IInteraction>(out var _))
+            {
+                // Rayに当たったオブジェクトが以前のオブジェクトとは違い、かつIInteractionを持っていた場合
+                targetInteractableObject = hit.collider.gameObject;
+                return true;
+            }
         }
-        return null;
+        // Rayに何も当たらなかった、または IInteractionを持っていなかった場合
+        targetInteractableObject = null;
+        return true;
     }
-    
-    
+
+    private TargetObjectData GenInteractionTargetObjectData(GameObject target)
+    {
+        if (target == null)
+        {
+            return new TargetObjectData(null, null);
+        }
+        return new TargetObjectData(target.GetComponent<IInteraction>(), target.GetComponent<IPlayerStateChangeRequester>());
+    }
+}
+
+public struct TargetObjectData
+{
+    public IInteraction Interaction;
+    public IPlayerStateChangeRequester PlayerStateChangeRequester;
+
+
+    public TargetObjectData(IInteraction interaction, IPlayerStateChangeRequester playerStateChangeRequester)
+    {
+        Interaction = interaction ?? null;
+        PlayerStateChangeRequester = playerStateChangeRequester ?? null;
+    }
 }
