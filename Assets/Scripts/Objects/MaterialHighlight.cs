@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
-public class FocusHighlight : MonoBehaviour
+public class MaterialHighlight : MonoBehaviour
 {
     private static readonly int IsHighlight = Shader.PropertyToID("_IsHighlight");
     [SerializeField] private Renderer[] targetRenderers;
     private Material[] _uniqueMaterials;
-    public bool isHighlight = false;
 
     private void Start()
     {
@@ -18,14 +18,23 @@ public class FocusHighlight : MonoBehaviour
             renderer.material = _uniqueMaterials[i];
         }
     }
-    
-    private void LateUpdate()
+
+    public async void HighlightThisFrame()
     {
-        foreach (Material material in _uniqueMaterials)
+        foreach (Material mat in _uniqueMaterials)
         {
-            int value = isHighlight ? 1 : 0;
-            material.SetInt(IsHighlight, value);
+            if (mat != null)
+            {
+                mat.SetInt(IsHighlight, 1);
+            }
         }
-        isHighlight = false;
+        await UniTask.Yield();
+        foreach (Material mat in _uniqueMaterials)
+        {
+            if (mat != null)
+            {
+                mat.SetInt(IsHighlight, 0);
+            }
+        }
     }
 }

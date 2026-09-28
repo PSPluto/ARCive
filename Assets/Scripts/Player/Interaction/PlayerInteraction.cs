@@ -31,9 +31,10 @@ public class PlayerInteraction : MonoBehaviour
     {
         if(FindInteractableObject(out _targetObj))
         { 
-            // 値の更新   
+            // もし値を更新すべきだと判定されたら値の更新   
             _targetObjectData = GenInteractionTargetObjectData(_targetObj);
         }
+        _targetObjectData.MaterialHighlight?.HighlightThisFrame();
     }
 
     /// <summary>
@@ -72,9 +73,12 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (target == null)
         {
-            return new TargetObjectData(null, null);
+            return new TargetObjectData(null, null,null);
         }
-        return new TargetObjectData(target.GetComponent<IInteraction>(), target.GetComponent<IPlayerStateChangeRequester>());
+        return new TargetObjectData(
+            target.GetComponent<IInteraction>(),
+            target.GetComponent<IPlayerStateChangeRequester>(),
+            target.GetComponent<MaterialHighlight>());
     }
 }
 
@@ -82,11 +86,13 @@ public struct TargetObjectData
 {
     public IInteraction Interaction;
     public IPlayerStateChangeRequester PlayerStateChangeRequester;
+    public MaterialHighlight MaterialHighlight;
 
 
-    public TargetObjectData(IInteraction interaction, IPlayerStateChangeRequester playerStateChangeRequester)
+    public TargetObjectData(IInteraction interaction, IPlayerStateChangeRequester playerStateChangeRequester, MaterialHighlight materialHighlight)
     {
         Interaction = interaction ?? null;
         PlayerStateChangeRequester = playerStateChangeRequester ?? null;
+        MaterialHighlight = materialHighlight ?? null;
     }
 }

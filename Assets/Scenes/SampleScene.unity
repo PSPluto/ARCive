@@ -614,7 +614,7 @@ Light:
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
   m_CustomShadowLayers: 0
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
   m_RenderingLayersMask:
     serializedVersion: 0
     m_Bits: 1
@@ -768,6 +768,11 @@ PrefabInstance:
 --- !u!4 &494026724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
+  m_PrefabInstance: {fileID: 494026723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &494026725 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
   m_PrefabInstance: {fileID: 494026723}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &545330554
@@ -983,6 +988,7 @@ GameObject:
   - component: {fileID: 706255639}
   - component: {fileID: 706255640}
   - component: {fileID: 706255641}
+  - component: {fileID: 706255642}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Untagged
@@ -1040,6 +1046,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Objects.BaseCrate
   requestStateRef: 1
+--- !u!114 &706255642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706255638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3077db1e3047008465b3e6f9f4ec72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialHighlight
+  targetRenderers:
+  - {fileID: 494026725}
+  - {fileID: 839911030}
 --- !u!1 &751155113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,6 +1303,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &839911030 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2001496963424984923, guid: 3f425bf1dbf2c3d448eed3c9933de2ff, type: 3}
+  m_PrefabInstance: {fileID: 494026723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &844013021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,7 +1489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   stateChangeRelay: {fileID: 17622578}
   rayStartPos: {fileID: 1548847347}
-  rayDirectionYOffset: -0.5
+  rayDirectionYOffset: -1
 --- !u!1 &1405364692
 GameObject:
   m_ObjectHideFlags: 0
