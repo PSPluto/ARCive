@@ -7,5 +7,5 @@ public class WeaponData : ItemData
     [SerializeField] private int magazineSize;
     
     public int Damage => bulletDamage;
-    public int MaxDurability => magazineSize;
+    public int MagazineSize => magazineSize;
 }

@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 // アイテムの静的データを格納する
 public class ItemDataBase : MonoBehaviour
 {
+    // シングルトン化 {
     public static ItemDataBase Instance;
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
-
-    public ItemData[]  itemDataAllay;
+    // }
+    
+    // 宣言 ｛
+    public readonly Dictionary<string, ItemData> ItemDataDictionary = new Dictionary<string, ItemData>();
+    
+    // }
 }
