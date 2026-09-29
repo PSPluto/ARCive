@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Weapon")]
-public abstract class WeaponData : ItemData
+public class WeaponData : ItemData
 {
-    [SerializeField] private int damage;
-    [SerializeField] private int maxDurability;
+    [SerializeField] private int bulletDamage;
+    [SerializeField] private int magazineSize;
     
-    public int Damage => damage;
-    public int MaxDurability => maxDurability;
+    public int Damage => bulletDamage;
+    public int MaxDurability => magazineSize;
 }
