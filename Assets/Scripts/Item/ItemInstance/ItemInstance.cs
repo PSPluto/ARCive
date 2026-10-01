@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-
-public class ItemInstance
+namespace Item.ItemInstance
 {
-    public string ID;
-    protected ItemInstance(string id)
+    /// <summary>
+    /// アイテムの実体データ。主に「状態」を持つ
+    /// </summary>
+    public class ItemInstance
     {
-        ID = id;
+        
     }
 }

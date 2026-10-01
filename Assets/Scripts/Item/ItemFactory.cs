@@ -1,9 +1,7 @@
-public class ItemFactory
+namespace Item
 {
-    public ItemInstance CreateInstance(string id)
+    public class ItemFactory
     {
-        // ItemDataBase.Instance.ItemDataDictionary[id].
-        // TODO: アイテムのインスタンスを作るためのコードを格納するSOのリストを作る。
-        return null;
+        
     }
 }
