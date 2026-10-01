@@ -7,5 +7,5 @@ public class PlayerStateSettings : ScriptableObject
     public bool canFire;
     public bool canReload;
     public bool canInteract;
-    public bool canAim;
+    public bool canUpdateAim;
 }

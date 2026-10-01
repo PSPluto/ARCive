@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerHealth health;
     [SerializeField] private PlayerInteraction interact;
     [SerializeField] private StateSettingsDatabase stateSettingsDatabase;
+    [SerializeField] private PlayerAim aim;
 
     // ==================== State ====================
     public PlayerState currentState { get; private set; } = PlayerState.Normal;
@@ -43,7 +44,8 @@ public class Player : MonoBehaviour
         {
             Interact();
         }
-        Debug.Log(currentState);
+
+        UpdateAim();
     }
 
     // ==================== 子の機能呼び出し ====================
@@ -73,6 +75,12 @@ public class Player : MonoBehaviour
         }
         Vector3 direction3D = new Vector3(direction2D.x, 0f, direction2D.y);
         movement.Move(direction3D);
+    }
+    
+    private void UpdateAim()
+    {
+        if(currentStateSettings.canUpdateAim == false) return;
+        aim.UpdateAim();
     }
 
     /// <summary>

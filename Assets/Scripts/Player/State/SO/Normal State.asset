@@ -16,4 +16,4 @@ MonoBehaviour:
   canFire: 1
   canReload: 1
   canInteract: 1
-  canAim: 1
+  canUpdateAim: 1

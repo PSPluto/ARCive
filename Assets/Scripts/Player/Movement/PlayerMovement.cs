@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="direction">入力方向</param>
     public void Move(Vector3 direction)
     {
-        rb.linearVelocity = direction * moveSpeed;
+        float linearVelocityY  = rb.velocity.y;
+        rb.linearVelocity = direction * moveSpeed +  new Vector3(0, linearVelocityY, 0);
     }
 }
