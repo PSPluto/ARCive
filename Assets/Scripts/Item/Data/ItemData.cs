@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Item.ItemData
+namespace Item.Data
 {
     /// <summary>
     /// 主にアイテムの固定データを扱う。
     /// </summary>
     [CreateAssetMenu(fileName = "New ItemData", menuName = "Scriptable Objects/Item Data")]
-    public class ItemData : ScriptableObject
+    public abstract class ItemData : ScriptableObject
     {
         [SerializeField] private string id;
         [SerializeField] private string itemName;
