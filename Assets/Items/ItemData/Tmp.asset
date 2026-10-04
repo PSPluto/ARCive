@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be5256768e24a9ebb83100d900c1230, type: 3}
   m_Name: Tmp
   m_EditorClassIdentifier: Assembly-CSharp::Item.ItemData.ItemDataDerived.Stackable
-  id: 
-  itemName: 
+  id: Tmp_Item
+  itemName: "\u4EEE\u306E\u30A2\u30A4\u30C6\u30E0"
   itemDescription: 
+  maxStackSize: 1
