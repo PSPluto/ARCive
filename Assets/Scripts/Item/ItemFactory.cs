@@ -11,7 +11,7 @@ namespace Item
         /// <param name="lootTables"></param>
         /// <param name="lootValueWeight"></param>
         /// <returns></returns>
-        public Instance.ItemInstance CreateItemInstance(LootTables lootTables, float lootValueWeight)
+        public Instance.ItemInstance CreateItemInstance(LootTable lootTable, float lootValueWeight)
         {
             // TODO: リターンでラムダ式を返す。
             
