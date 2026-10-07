@@ -7,7 +7,7 @@ namespace Item
 {
     public class ItemFactory
     {
-        [SerializeField] private ItemInstanceFactoryDatabase _instanceFactoryDatabase;
+        [SerializeField] private ItemInstanceFactoryDataBase _instanceFactoryDatabase;
         /// <summary>
         /// lootTableと戦利品価値の重み から実際にアイテムを生成してリターンします。
         /// </summary>
@@ -16,8 +16,10 @@ namespace Item
         /// <returns></returns>
         public Instance.ItemInstance CreateItemInstance(LootTable lootTable, float lootValueBias)
         {
+            // アイテムを決める
             var hitIndex =  SearchIndex();
-
+            // アイテムのインスタンス化用のNew式をDBからとってくる
+            // 
             // TODO: リターンでnew式を格納したラムダ式を返す。
             
             
@@ -35,35 +37,71 @@ namespace Item
                 var ids = lootTable.Entries.Select(entry => entry.id).ToArray();
                 ItemRarity[] itemRarities = ReturnItemRarities();
                 
-                
-                
-                
-                // 重みの合計値
-                var totalWeight = weights.Sum();
-                var randomValue = Random.Range(0, totalWeight);
-                
-                int currentSum = 0;
-                for (int i = 0; i < weights.Length; i++)
+                // weightをlootValueBias(-1~1)とレアリティ(0~5)に基づいて調整
+                // -1でルートテーブルの中で最もレアリティの低いもののみ
+                // 1で最高のみ
+
+                var adjustedWeights = ReturnAdjustWeight();
+
+                var totalWeight = adjustedWeights.Sum();
+                var randomValue = Random.Range(0f, totalWeight);
+
+                float currentSum = 0f;
+
+                for (var i = 0; i < adjustedWeights.Length; i++)
                 {
-                    currentSum += weights[i];
+                    currentSum += adjustedWeights[i];
 
                     if (randomValue < currentSum)
                     {
                         return i;
                     }
                 }
+                
+                
 
                 return 0;
 
                 ItemRarity[] ReturnItemRarities()
                 {
-                    List<ItemRarity> itemRarities = new List<ItemRarity>();
+                    List<ItemRarity> itemRarityList = new List<ItemRarity>();
                     foreach (var id in ids)
                     {
-                        itemRarities.Add(ItemDataBaseManager.Instance.DataBase.Get(id).ItemRarity);
+                        itemRarityList.Add(ItemDataBaseManager.Instance.DataBase.Get(id).ItemRarity);
                     }
-                    return itemRarities.ToArray();
+                    return itemRarityList.ToArray();
                 }
+
+                float[] ReturnAdjustWeight()
+                {
+                    var bias = Mathf.Clamp(lootValueBias, -1f, 1f);
+
+                    // -1〜1 を 0〜1 の目標レアリティに変換
+                    var targetRarity = (bias + 1f) * 0.5f;
+
+                    var adjustedWeights = new float[weights.Length];
+                    var maxRarity = (float)ItemRarity.Legendary;
+
+                    for (var i = 0; i < weights.Length; i++)
+                    {
+                        // レアリティを 0〜1 に正規化
+                        var rarity = (float)itemRarities[i] / maxRarity;
+
+                        // 目標レアリティとの差が小さいほど高い値になる
+                        var rarityWeight =
+                            1f - Mathf.Abs(rarity - targetRarity);
+
+                        // 0〜1 の範囲に制限
+                        rarityWeight = Mathf.Clamp01(rarityWeight);
+
+                        // 元の重みに補正係数を掛ける
+                        adjustedWeights[i] =
+                            weights[i] * rarityWeight;
+                    }
+
+                    return adjustedWeights;
+                }
+
             }
         }
     }

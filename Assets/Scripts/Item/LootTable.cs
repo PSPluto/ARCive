@@ -15,6 +15,6 @@ namespace Item
     public struct LootEntry
     {
         public string id;
-        public int weight;
+        public float weight;
     }
 }
