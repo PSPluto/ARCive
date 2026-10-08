@@ -1,8 +1,6 @@
-﻿using System;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Item.Data
+namespace Item.DataBase
 {
     public class ItemDataBaseManager : MonoBehaviour
     {

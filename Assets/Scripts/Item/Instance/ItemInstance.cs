@@ -1,3 +1,7 @@
+using System;
+using Item.DataBase;
+using UnityEngine;
+
 namespace Item.Instance
 {
     /// <summary>
@@ -5,6 +9,13 @@ namespace Item.Instance
     /// </summary>
     public class ItemInstance
     {
-        public string ID { get; private set; }
+        public string ID { get; protected set; }
+        public int StackCount { get; protected set; }
+        
+        public ItemInstance(string id, int stackCount )
+        {
+            ID = id;
+            StackCount = Mathf.Clamp(stackCount,1,((ItemDataBaseManager.Instance.DataBase.Get(id))).MaxStackSize);
+        }
     }
 }

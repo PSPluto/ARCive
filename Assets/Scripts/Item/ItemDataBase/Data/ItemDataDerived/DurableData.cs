@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Item.Data.ItemDataDerived
+namespace Item.DataBase.ItemDataDerived
 {
-    [CreateAssetMenu(fileName = "New Stackable Item", menuName = "Scriptable Objects/Item Data/Stackable", order = 0)]
+    [CreateAssetMenu(fileName = "New Durable Item", menuName = "Scriptable Objects/Item Data/Durable", order = 0)]
     public class DurableData : ItemData
     {
         [SerializeField] private int maxDurability = 40;

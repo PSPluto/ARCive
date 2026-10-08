@@ -1,13 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Item.Data;
+using Item.DataBase;
+using Item.Factory;
 
 namespace Item
 {
     public class ItemFactory
     {
-        [SerializeField] private ItemInstanceFactoryDataBase _instanceFactoryDatabase;
+        private ItemInstanceFactoryDataBase _instanceFactoryDatabase;
+        private void Initialize()
+        {
+            _instanceFactoryDatabase = new ItemInstanceFactoryDataBase();
+        }
+        
         /// <summary>
         /// lootTableと戦利品価値の重み から実際にアイテムを生成してリターンします。
         /// </summary>
@@ -16,30 +22,48 @@ namespace Item
         /// <returns></returns>
         public Instance.ItemInstance CreateItemInstance(LootTable lootTable, float lootValueBias)
         {
+            if (lootTable == null || lootTable.Entries == null || lootTable.Entries.Count == 0 )
+            {
+                Debug.LogError("引数 lootTable の値が nullまたはempty で CreateItemInstance が呼び出されました。");
+                return null;
+            } 
+            if (_instanceFactoryDatabase == null)
+            {
+                Initialize();
+            }
             // アイテムを決める
             var hitIndex =  SearchIndex();
-            // アイテムのインスタンス化用のNew式をDBからとってくる
-            // 
-            // TODO: リターンでnew式を格納したラムダ式を返す。
-            
-            
-            return null;
+            var hitId = lootTable.Entries[hitIndex].id;
+
+            if (_instanceFactoryDatabase.TryGetValue(hitId, out var instanceFunc))
+            {
+                return instanceFunc.Invoke();
+            }
+            else
+            {
+                Debug.LogError($"new式の登録されていないアイテム「{hitId}」をインスタンス化しようとしました。");
+                return null;
+            }
             
             
             
             int SearchIndex()
             {
                 var weights = lootTable.Entries.Select(entry => entry.weight).ToArray();
+                if (weights.Any(weight => weight < 0))
+                {
+                    Debug.LogError("LootTable に負の weight が含まれています。SOを修正してください");
+                    return 0;
+                }
+                
                 
                 // ここに全体重みの処理を書く。
                 // IDから価値を引っ張ってきて、「高価さ」によってlootValueBiasを適用する量を個々で決めていく。
                 
-                var ids = lootTable.Entries.Select(entry => entry.id).ToArray();
+                var idArray = lootTable.Entries.Select(entry => entry.id).ToArray();
                 ItemRarity[] itemRarities = ReturnItemRarities();
                 
                 // weightをlootValueBias(-1~1)とレアリティ(0~5)に基づいて調整
-                // -1でルートテーブルの中で最もレアリティの低いもののみ
-                // 1で最高のみ
 
                 var adjustedWeights = ReturnAdjustWeight();
 
@@ -59,13 +83,13 @@ namespace Item
                 }
                 
                 
-
+                Debug.LogError("SearchIndex 内でエラーが発生しました。");
                 return 0;
 
                 ItemRarity[] ReturnItemRarities()
                 {
                     List<ItemRarity> itemRarityList = new List<ItemRarity>();
-                    foreach (var id in ids)
+                    foreach (var id in idArray)
                     {
                         itemRarityList.Add(ItemDataBaseManager.Instance.DataBase.Get(id).ItemRarity);
                     }
