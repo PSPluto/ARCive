@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Item.DataBase.ItemDataDerived
+namespace Item.Database.ItemDataDerived
 {
     [CreateAssetMenu(fileName = "New Durable Item", menuName = "Scriptable Objects/Item Data/Durable", order = 0)]
     public class DurableData : ItemData

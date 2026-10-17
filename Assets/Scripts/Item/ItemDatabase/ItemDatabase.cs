@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Item.DataBase
+namespace Item.Database
 {
     [CreateAssetMenu(fileName = "New ItemDatabase", menuName = "Scriptable Objects/Item Database")]
-    public class ItemDataBase : ScriptableObject
+    public class ItemDatabase : ScriptableObject
     {
         private bool _isInitialized;
         [SerializeField] private List<ItemData> itemDataList = new();
@@ -21,7 +21,7 @@ namespace Item.DataBase
             {
                 if (!_itemMap.TryAdd(itemData.ID, itemData))
                 {
-                    Debug.LogError($"ItemDataBase内で IDが重複しています : {itemData.ID}");
+                    Debug.LogError($"ItemDatabase内で IDが重複しています : {itemData.ID}");
                 }
             }
         }

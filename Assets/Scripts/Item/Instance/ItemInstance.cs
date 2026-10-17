@@ -1,5 +1,5 @@
 using System;
-using Item.DataBase;
+using Item.Database;
 using UnityEngine;
 
 namespace Item.Instance
@@ -15,7 +15,7 @@ namespace Item.Instance
         public ItemInstance(string id, int stackCount )
         {
             ID = id;
-            StackCount = Mathf.Clamp(stackCount,1,((ItemDataBaseManager.Instance.DataBase.Get(id))).MaxStackSize);
+            StackCount = Mathf.Clamp(stackCount,1,((ItemDatabaseManager.Instance.Database.Get(id))).MaxStackSize);
         }
     }
 }

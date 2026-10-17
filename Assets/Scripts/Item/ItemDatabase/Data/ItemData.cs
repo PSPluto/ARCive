@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Item.DataBase
+namespace Item.Database
 {
     /// <summary>
     /// 主にアイテムの固定データを扱う。

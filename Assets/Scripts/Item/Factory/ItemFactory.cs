@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Item.DataBase;
+using Item.Database;
 using Item.Factory;
 
 namespace Item
 {
     public class ItemFactory
     {
-        private ItemInstanceFactoryDataBase _instanceFactoryDatabase;
+        private ItemInstanceFactoryDatabase _instanceFactoryDatabase;
         private void Initialize()
         {
-            _instanceFactoryDatabase = new ItemInstanceFactoryDataBase();
+            _instanceFactoryDatabase = new ItemInstanceFactoryDatabase();
         }
         
         /// <summary>
@@ -91,7 +91,7 @@ namespace Item
                     List<ItemRarity> itemRarityList = new List<ItemRarity>();
                     foreach (var id in idArray)
                     {
-                        itemRarityList.Add(ItemDataBaseManager.Instance.DataBase.Get(id).ItemRarity);
+                        itemRarityList.Add(ItemDatabaseManager.Instance.Database.Get(id).ItemRarity);
                     }
                     return itemRarityList.ToArray();
                 }
