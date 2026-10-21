@@ -5,17 +5,27 @@ using UnityEngine;
 namespace Item.Instance
 {
     /// <summary>
-    /// アイテムの実体データ。主に「状態」を持つ
+    /// アイテムの実体データ。主に状態を持つ
     /// </summary>
     public class ItemInstance
     {
-        public string ID { get; protected set; }
-        public int StackCount { get; protected set; }
+        public ItemData Definition { get; }
+        public string ID => Definition.ID;
+        public int StackCount { get; private set; }
         
-        public ItemInstance(string id, int stackCount )
+        public ItemInstance(ItemData definition, int stackCount )
         {
-            ID = id;
-            StackCount = Mathf.Clamp(stackCount,1,((ItemDatabaseManager.Instance.Database.Get(id))).MaxStackSize);
+            // definition : 定義
+            if (definition == null)
+            {
+                Debug.LogError($"アイテムの固定データが存在しません : {nameof(definition)}");
+            }
+
+            Definition = definition;
+            StackCount = Mathf.Clamp(
+                stackCount,
+                1,
+                definition.MaxStackSize);
         }
     }
 }

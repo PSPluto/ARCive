@@ -1,23 +1,28 @@
-using Item.Database;
 using Item.Database.ItemDataDerived;
-using UnityEngine;
 
 namespace Item.Instance
 {
-    public class DurableInstance :ItemInstance
+    public class DurableInstance : ItemInstance
     {
+        private readonly DurableData durableData;
+
         public int CurrentDurability { get; private set; }
 
         public void ChangeDurabilityValue(int value)
         {
-            CurrentDurability = Mathf.Clamp(value,0, ((DurableData)(ItemDatabaseManager.Instance.Database.Get(ID))).MaxDurability);
+            CurrentDurability = UnityEngine.Mathf.Clamp(
+                value,
+                0,
+                durableData.MaxDurability);
         }
         
-        public DurableInstance(string id, int currentDurability) : base(id, 1)
+        public DurableInstance(DurableData definition, int currentDurability) : base(definition, 1)
         {
-            CurrentDurability = Mathf.Clamp(currentDurability,0, ((DurableData)(ItemDatabaseManager.Instance.Database.Get(id))).MaxDurability);
+            durableData = definition;
+            CurrentDurability = UnityEngine.Mathf.Clamp(
+                currentDurability,
+                0,
+                durableData.MaxDurability);
         }
-        
-        // TODO: DBの該当SOへの参照をキャッシュする
     }
 }

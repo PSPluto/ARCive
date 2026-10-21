@@ -1,18 +1,35 @@
 using System;
 using System.Collections.Generic;
+using Item.Database;
 using Item.Instance;
 
 namespace Item.Factory
 { 
     public class ItemInstanceFactoryDatabase
     {
-        private readonly Dictionary<string, Func<ItemInstance>> _instanceFactoryDatabase = new Dictionary<string, Func<ItemInstance>>()
+        private readonly Dictionary<string, Func<ItemInstance>> _instanceFactoryDatabase;
+
+        public ItemInstanceFactoryDatabase(ItemDatabase database)
+        {
+            if (database == null)
             {
-                ["TmpItem"] = () => new ItemInstance("TmpItem", 3),
-                ["TmpItem2"] = () => new DurableInstance("TmpItem2", 20),
-                // Key:ID、Value:new 式
-                //TODO: Itemをハードコード
-            };
+                throw new ArgumentNullException(nameof(database));
+            }
+
+            _instanceFactoryDatabase = new Dictionary<string, Func<ItemInstance>>();
+
+            if (database.TryGet("TmpItem", out var itemData))
+            {
+                _instanceFactoryDatabase[itemData.ID] = () => new ItemInstance(itemData, 3);
+            }
+
+            if (database.TryGet("TmpItem2", out var durableData) &&
+                durableData is Item.Database.ItemDataDerived.DurableData durableItemData)
+            {
+                _instanceFactoryDatabase[durableData.ID] =
+                    () => new DurableInstance(durableItemData, 20);
+            }
+        }
 
         public bool TryGetValue(string key, out Func<ItemInstance> resultFunc)
         {

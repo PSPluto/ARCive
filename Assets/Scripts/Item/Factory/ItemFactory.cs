@@ -11,7 +11,8 @@ namespace Item
         private ItemInstanceFactoryDatabase _instanceFactoryDatabase;
         private void Initialize()
         {
-            _instanceFactoryDatabase = new ItemInstanceFactoryDatabase();
+            _instanceFactoryDatabase =
+                new ItemInstanceFactoryDatabase(ItemDatabaseManager.Instance.Database);
         }
         
         /// <summary>
@@ -91,7 +92,13 @@ namespace Item
                     List<ItemRarity> itemRarityList = new List<ItemRarity>();
                     foreach (var id in idArray)
                     {
-                        itemRarityList.Add(ItemDatabaseManager.Instance.Database.Get(id).ItemRarity);
+                        if (!ItemDatabaseManager.Instance.Database.TryGet(id, out var itemData))
+                        {
+                            throw new KeyNotFoundException(
+                                $"ItemDatabase に ID '{id}' が登録されていません。");
+                        }
+
+                        itemRarityList.Add(itemData.ItemRarity);
                     }
                     return itemRarityList.ToArray();
                 }
