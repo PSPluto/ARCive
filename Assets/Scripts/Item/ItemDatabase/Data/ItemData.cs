@@ -1,4 +1,5 @@
 using UnityEngine;
+using Item.Instance;
 
 namespace Item.Database
 {
@@ -9,19 +10,21 @@ namespace Item.Database
     public abstract class ItemData : ScriptableObject
     {
         [SerializeField] private string id = "tmpItem";
-        
+
         [SerializeField] private string itemName = "tmpItem";
         [SerializeField] private string itemDescription = "tmp";
-        
+
         [SerializeField] private ItemRarity itemRarity = ItemRarity.Common;
 
         [SerializeField] private int maxStackSize = 1;
-        
+
         public string ID => id;
         public string ItemName => itemName;
         public string ItemDescription => itemDescription;
         public ItemRarity ItemRarity => itemRarity;
         public int MaxStackSize => maxStackSize;
+
+        public abstract ItemInstance CreateInstance();
     }
 
     public enum ItemRarity

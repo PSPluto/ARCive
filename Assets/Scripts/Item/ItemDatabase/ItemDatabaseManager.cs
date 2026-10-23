@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
+
 namespace Item.Database
 {
     public class ItemDatabaseManager : MonoBehaviour
     {
-        public static ItemDatabaseManager Instance = null;
+        public static ItemDatabaseManager Instance { get; private set; }
 
         private void Awake()
         {
-            if (Instance != null) return; 
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             Instance = this;
         }
 

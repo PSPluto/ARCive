@@ -12,14 +12,11 @@ namespace Item.Instance
         public ItemData Definition { get; }
         public string ID => Definition.ID;
         public int StackCount { get; private set; }
-        
-        public ItemInstance(ItemData definition, int stackCount )
+
+        public ItemInstance(ItemData definition, int stackCount)
         {
-            // definition : 定義
             if (definition == null)
-            {
-                Debug.LogError($"アイテムの固定データが存在しません : {nameof(definition)}");
-            }
+                throw new ArgumentNullException(nameof(definition));
 
             Definition = definition;
             StackCount = Mathf.Clamp(
