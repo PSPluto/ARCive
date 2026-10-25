@@ -10,6 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1222c19110b46f0ab1aa40753c29748, type: 3}
-  m_Name: General Table
+  m_Name: NormalCrate
   m_EditorClassIdentifier: Assembly-CSharp::Item.LootTable
-  _entries: []
+  _entries:
+  - id: Common
+    weight: 10
+  - id: UnCommon
+    weight: 6
+  - id: Rare
+    weight: 3
+  - id: Epic
+    weight: 1

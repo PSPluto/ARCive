@@ -10,7 +10,8 @@ namespace Item
         public string SelectItemId(LootTable lootTable, float lootValueBias)
         {
             var weights = lootTable.Entries.Select(entry => entry.weight).ToArray();
-            if (weights.Any(weight => weight < 0))
+            
+            if (weights.Any(weight => weight < 0)) 
             {
                 Debug.LogError("LootTable に負の weight が含まれています。SOを修正してください");
                 return lootTable.Entries[0].id;
@@ -32,14 +33,14 @@ namespace Item
                     return itemIds[i];
                 }
             }
-
             Debug.LogError("LootTable のアイテム選択中にエラー");
             return itemIds[0];
         }
 
-        private static ItemRarity[] GetItemRarities(string[] itemIds)
+        private static ItemRarity[] GetItemRarities(string[] itemIds) 
         {
             var itemRarities = new ItemRarity[itemIds.Length];
+            
             for (var i = 0; i < itemIds.Length; i++)
             {
                 if (!ItemDatabaseManager.Instance.Database.TryGet(itemIds[i], out var itemData))
@@ -50,14 +51,10 @@ namespace Item
 
                 itemRarities[i] = itemData.ItemRarity;
             }
-
             return itemRarities;
         }
 
-        private static float[] AdjustWeights(
-            float[] weights,
-            ItemRarity[] itemRarities,
-            float lootValueBias)
+        private static float[] AdjustWeights(float[] weights, ItemRarity[] itemRarities, float lootValueBias)
         {
             var bias = Mathf.Clamp(lootValueBias, -1f, 1f);
             var targetRarity = (bias + 1f) * 0.5f;
@@ -70,7 +67,6 @@ namespace Item
                 var rarityWeight = Mathf.Clamp01(1f - Mathf.Abs(rarity - targetRarity));
                 adjustedWeights[i] = weights[i] * rarityWeight;
             }
-
             return adjustedWeights;
         }
     }

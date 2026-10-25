@@ -1736,6 +1736,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAim
   targetProvider: {fileID: 330585549}
   myRigidBody: {fileID: 844013025}
+--- !u!1 &929138401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929138403}
+  - component: {fileID: 929138402}
+  - component: {fileID: 929138404}
+  m_Layer: 0
+  m_Name: ItemDBManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &929138402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929138401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed6dd1edd594dc6999a670a8c30edcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item.Database.ItemDatabaseManager
+  itemDatabase: {fileID: 11400000, guid: 84ca41d8bc2bed548a0175b7879d777a, type: 2}
+--- !u!4 &929138403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929138401}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01592, y: 0.92621, z: -0.19937}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &929138404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929138401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a6d0ddb51c39e4c8d3c243cc665a13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemFactoryTest
+  lootTable: {fileID: 11400000, guid: 3c2fabde45216244795f2d4abf1559cf, type: 2}
+  lootValueBias: 0
 --- !u!1 &1405364692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,3 +2322,4 @@ SceneRoots:
   - {fileID: 1405364693}
   - {fileID: 706255639}
   - {fileID: 686229876}
+  - {fileID: 929138403}

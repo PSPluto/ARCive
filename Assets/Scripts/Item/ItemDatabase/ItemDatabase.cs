@@ -6,7 +6,6 @@ namespace Item.Database
     [CreateAssetMenu(fileName = "New ItemDatabase", menuName = "Scriptable Objects/Item Database")]
     public class ItemDatabase : ScriptableObject
     {
-        private bool _isInitialized;
         [SerializeField] private List<ItemData> itemDataList = new();
         private Dictionary<string, ItemData> _itemMap;
         
@@ -19,7 +18,7 @@ namespace Item.Database
 
             foreach (var itemData in itemDataList)
             {
-                if (!_itemMap.TryAdd(itemData.ID, itemData))
+                if (! _itemMap.TryAdd(itemData.ID, itemData))
                 {
                     Debug.LogError($"ItemDatabase内で IDが重複しています : {itemData.ID}");
                 }
@@ -28,12 +27,10 @@ namespace Item.Database
 
         public bool TryGet(string id, out ItemData itemData)
         {
-            if (_isInitialized == false)
+            if (_itemMap == null)
             {
                 Initialize();
-                _isInitialized = true;
             }
-
             return _itemMap.TryGetValue(id, out itemData);
         }
     }
