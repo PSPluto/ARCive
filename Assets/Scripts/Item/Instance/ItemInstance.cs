@@ -24,5 +24,19 @@ namespace Item.Instance
                 1,
                 definition.MaxStackSize);
         }
+
+        /// <summary>
+        /// スタック数を +/-します
+        /// </summary>
+        /// <param name="value">加算する数</param>
+        /// <returns>あふれた数(加算できなかった量)</returns>
+        // TODO: -の対応
+        public int ChangeStackCount(int value)
+        {
+            var remainder = Math.Max((StackCount + value) - Definition.MaxStackSize,0);
+            StackCount += (value  - remainder);
+            
+            return remainder;
+        }
     }
 }

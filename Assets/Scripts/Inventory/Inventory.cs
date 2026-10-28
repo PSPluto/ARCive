@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Item.Instance;
+using Unity.VisualScripting;
 
 namespace Inventory
 {
@@ -20,7 +21,7 @@ namespace Inventory
         {
             items =  new ItemInstance[size];
         }
-
+        
         /// <summary>
         /// アイテムを指定のスロットに追加する。
         /// </summary>
@@ -28,28 +29,46 @@ namespace Inventory
         /// <param name="index">追加する場所。引数なしで自動指定</param>
         public void AddItem(ItemInstance item, int index = -1)
         {
-            // indexが未設定の場合
-            if (index == -1)
-            {
-                // TODO:条件式どうにかする
-                index = Array.FindIndex(items, n => (n !=null && n.ID == item.ID && n.StackCount < n.Definition.MaxStackSize) || n == null );
-                
-            }
-            
             // 初期化されているかチェック
             if (items == null)
             {
                 throw new NullReferenceException("items が初期化されていませんでした");
             }
-            // インデックス内かチェック
-            if (!GameUtility.IsBetweenInclusive(index, 0, items.GetLength(0) - 1))
-            {
-                throw new IndexOutOfRangeException("アイテム追加 で指定された値がインベントリのIndex範囲外でした");
-            }
             
-            // 実行
-            // TODO: スタック数に応じて、置き換えるかスタック数に加算するか決めるようにする
-            items[index] = item;
+            // indexが未設定の場合
+            if (index == -1)
+            {
+                foreach (var itemInstance in items)
+                {
+                    if (itemInstance != null)
+                    {
+                        if (itemInstance.ID == item.ID)
+                        {
+                            if (itemInstance.StackCount < itemInstance.Definition.MaxStackSize)
+                            {
+                                // スタック数が最大値よりも小さい なら
+                                // itemInstance.;
+                                //TODO
+                            }
+                        }
+                    }
+                }
+                // アイテムの自動配置処理
+                return;
+            }
+            // indexが指定されている場合
+            else
+            {
+                // 不正な値でないかチェック
+                if (!GameUtility.IsBetweenInclusive(index, 0, items.GetLength(0) - 1))
+                {
+                    throw new IndexOutOfRangeException("アイテム追加 で指定された値がインベントリのIndex範囲外でした");
+                }
+                
+                // 実行
+                // TODO: スタック数に応じて、置き換えるかスタック数に加算するか決めるようにする
+                items[index] = item;
+            }
         }
 
         /// <summary>
