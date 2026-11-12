@@ -1,0 +1,14 @@
+{
+  "material": "\u30de\u30c6\u30ea\u30a2\u30eb.001",
+  "generator": "Blender 5.2.0 LTS / Mat-Baker",
+  "resolution": 2048,
+  "format": "PNG",
+  "bit_depth": 8,
+  "normal_convention": "OpenGL",
+  "maps": {
+    "basecolor": "\u30de\u30c6\u30ea\u30a2\u30eb_001_BaseColor.png",
+    "roughness": "\u30de\u30c6\u30ea\u30a2\u30eb_001_Roughness.png",
+    "metallic": "\u30de\u30c6\u30ea\u30a2\u30eb_001_Metallic.png"
+  },
+  "ior": 1.0
+}

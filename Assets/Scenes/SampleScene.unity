@@ -218,6 +218,50 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8839368762345780380, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+--- !u!4 &134271937 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7876023681238672744, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+  m_PrefabInstance: {fileID: 206674055}
+  m_PrefabAsset: {fileID: 0}
+--- !u!59 &134271938
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134271929}
+  serializedVersion: 3
+  m_ConnectedBody: {fileID: 1141269182}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_UseSpring: 0
+  m_Spring:
+    spring: 0
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 0
+  m_UseLimits: 1
+  m_ExtendedLimits: 0
+  m_UseAcceleration: 0
+  m_Limits:
+    min: -30
+    max: 10
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &147248689
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +372,7 @@ FixedJoint:
   serializedVersion: 1
   m_ConnectedBody: {fileID: 206674061}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: 150
+  m_BreakForce: 250
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
@@ -371,7 +415,7 @@ FixedJoint:
   serializedVersion: 1
   m_ConnectedBody: {fileID: 206674061}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: 150
+  m_BreakForce: 250
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
@@ -470,11 +514,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalPosition.z
@@ -482,31 +526,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6830124
+      value: 0.9659257
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.18301311
+      value: -0.0000005103647
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.18301296
+      value: -0.25881952
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.6830129
+      value: -0.0000017881391
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -520,9 +564,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: ARC_turret
       objectReference: {fileID: 0}
+    - target: {fileID: 2197377935267397193, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197377935267397193, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197377935267397193, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7876023681238672744, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 905273268}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
@@ -548,6 +607,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1702430395602233465, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 206674069}
+    - targetCorrespondingSourceObject: {fileID: -1702430395602233465, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 206674075}
     - targetCorrespondingSourceObject: {fileID: -4918486321411834200, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 790493725}
@@ -575,6 +637,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7656107544442117486, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 826520210}
+    - targetCorrespondingSourceObject: {fileID: 7656107544442117486, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826520214}
     - targetCorrespondingSourceObject: {fileID: -3754608908043963507, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 790493723}
@@ -590,15 +655,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 134271934}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 134271938}
     - targetCorrespondingSourceObject: {fileID: -6600570728876557273, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 223119632}
     - targetCorrespondingSourceObject: {fileID: -6600570728876557273, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 223119631}
+      addedObject: {fileID: 1181175831}
     - targetCorrespondingSourceObject: {fileID: -6600570728876557273, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1181175831}
+      addedObject: {fileID: 1181175835}
     - targetCorrespondingSourceObject: {fileID: -1450400270514423276, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 790493721}
@@ -608,6 +676,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1450400270514423276, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1195171277}
+    - targetCorrespondingSourceObject: {fileID: -1450400270514423276, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1195171281}
     - targetCorrespondingSourceObject: {fileID: 4223578148955165005, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 545286143}
@@ -617,6 +688,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4223578148955165005, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1302354365}
+    - targetCorrespondingSourceObject: {fileID: 4223578148955165005, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1302354369}
     - targetCorrespondingSourceObject: {fileID: 2416397326189214708, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 462384004}
@@ -626,6 +700,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2416397326189214708, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 462384008}
+    - targetCorrespondingSourceObject: {fileID: 2416397326189214708, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 462384012}
     - targetCorrespondingSourceObject: {fileID: 4147582051511559177, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1141269184}
@@ -687,7 +764,7 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 1
+  m_UseSpring: 0
   m_Spring:
     spring: 500
     damper: 0
@@ -706,8 +783,8 @@ HingeJoint:
     bounciness: 0
     bounceMinVelocity: 0
     contactDistance: 0
-  m_BreakForce: 250
-  m_BreakTorque: 2000
+  m_BreakForce: 350
+  m_BreakTorque: 50
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
   m_MassScale: 0.00001
@@ -737,7 +814,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!138 &206674060
 FixedJoint:
@@ -838,23 +915,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ecd3b7486afa141ade6678bd3b8dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrakeEffect
-  EffectPrefab: {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
---- !u!138 &223119631
-FixedJoint:
+  EffectPrefabs:
+  - {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
+--- !u!114 &206674075
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790493716}
-  serializedVersion: 1
-  m_ConnectedBody: {fileID: 206674061}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
+  m_GameObject: {fileID: 206674056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0470883a27a7bc41a66445341943183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TensionView
+  textPosOffset: 0
 --- !u!54 &223119632
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1380,7 +1456,7 @@ HingeJoint:
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
-  m_BreakTorque: Infinity
+  m_BreakTorque: 200
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
   m_MassScale: 1
@@ -1434,6 +1510,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5092638432983235209, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+--- !u!114 &462384012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462384002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ecd3b7486afa141ade6678bd3b8dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrakeEffect
+  EffectPrefabs:
+  - {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
 --- !u!1 &485885020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,7 +1746,7 @@ HingeJoint:
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
-  m_BreakTorque: Infinity
+  m_BreakTorque: 200
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
   m_MassScale: 1
@@ -2237,7 +2328,7 @@ HingeJoint:
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
-  m_BreakTorque: Infinity
+  m_BreakTorque: 200
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
   m_MassScale: 1
@@ -2310,7 +2401,7 @@ HingeJoint:
   m_Axis: {x: 0.6, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 1
+  m_UseSpring: 0
   m_Spring:
     spring: 500
     damper: 0
@@ -2329,8 +2420,8 @@ HingeJoint:
     bounciness: 0
     bounceMinVelocity: 0
     contactDistance: 0
-  m_BreakForce: 250
-  m_BreakTorque: 2000
+  m_BreakForce: 350
+  m_BreakTorque: 50
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
   m_MassScale: 0.00001
@@ -2360,7 +2451,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!59 &790493726
 HingeJoint:
@@ -2470,7 +2561,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ecd3b7486afa141ade6678bd3b8dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrakeEffect
-  EffectPrefab: {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  EffectPrefabs:
+  - {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
 --- !u!1 &816089159
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,7 +2693,7 @@ HingeJoint:
   m_Axis: {x: 0.3, y: 0.52, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 1
+  m_UseSpring: 0
   m_Spring:
     spring: 500
     damper: 0
@@ -2619,8 +2712,8 @@ HingeJoint:
     bounciness: 0
     bounceMinVelocity: 0
     contactDistance: 0
-  m_BreakForce: 250
-  m_BreakTorque: 2000
+  m_BreakForce: 350
+  m_BreakTorque: 50
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
   m_MassScale: 0.00001
@@ -2650,7 +2743,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!64 &826520209
 MeshCollider:
@@ -2686,7 +2779,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ecd3b7486afa141ade6678bd3b8dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrakeEffect
-  EffectPrefab: {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  EffectPrefabs:
+  - {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
+--- !u!114 &826520214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790493718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0470883a27a7bc41a66445341943183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TensionView
+  textPosOffset: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,6 +3047,133 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAim
   targetProvider: {fileID: 330585549}
   myRigidBody: {fileID: 844013025}
+--- !u!1 &905273267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 905273268}
+  - component: {fileID: 905273270}
+  - component: {fileID: 905273269}
+  m_Layer: 0
+  m_Name: Spot Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &905273268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905273267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.6893681, y: 0.13758846, z: -0.13681372, w: 0.697942}
+  m_LocalPosition: {x: 0.00623, y: -0.02475, z: 0.0088}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 134271937}
+  m_LocalEulerAnglesHint: {x: 89.303, y: 16.352, z: -6.025}
+--- !u!114 &905273269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905273267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &905273270
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905273267}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 0
+  m_Color: {r: 0.106918216, g: 0.5064541, b: 1, a: 1}
+  m_Intensity: 45.31
+  m_Range: 10
+  m_SpotAngle: 18.768677
+  m_InnerSpotAngle: 16.186386
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1 &929138401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3027,7 +3262,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004690929}
   serializedVersion: 5
-  m_Mass: 5
+  m_Mass: 0.0000001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3133,7 +3368,7 @@ Transform:
   m_GameObject: {fileID: 1004690929}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 9.25, z: 5.03}
+  m_LocalPosition: {x: -1, y: 9.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3200,7 +3435,7 @@ HingeJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141269180}
   serializedVersion: 3
-  m_ConnectedBody: {fileID: 134271930}
+  m_ConnectedBody: {fileID: 1141269182}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0.0009, z: 0.0087}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -3324,6 +3559,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8083889495159327952, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+--- !u!138 &1181175835
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790493716}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 206674061}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!64 &1195171277
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3346,6 +3597,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2537422257332086475, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+--- !u!114 &1195171281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790493715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ecd3b7486afa141ade6678bd3b8dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrakeEffect
+  EffectPrefabs:
+  - {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
 --- !u!64 &1302354365
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3368,6 +3634,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7396963429056534661, guid: bde151962cd0f3540adde9db2db3c471, type: 3}
+--- !u!114 &1302354369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790493714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ecd3b7486afa141ade6678bd3b8dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrakeEffect
+  EffectPrefabs:
+  - {fileID: 763799897560185588, guid: 798157bad7358b04499c9d71cd3c0d9b, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
 --- !u!1 &1405364692
 GameObject:
   m_ObjectHideFlags: 0
