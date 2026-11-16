@@ -20,11 +20,12 @@ public class TargetProvider : MonoBehaviour
     private Tuple<Vector3, Collider> TryGetMouseRaycastHit()
     {
         Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Debug.DrawRay(ray.origin, ray.direction * 5f, Color.wheat);
         if (Physics.Raycast(ray, out var hit))
         {
             return new (hit.point, hit.collider);
         }
-
+        
         return new (Vector3.zero, null);
     }
 }
