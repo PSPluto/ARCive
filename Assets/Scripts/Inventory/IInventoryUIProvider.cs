@@ -1,4 +1,6 @@
-﻿namespace Inventory
+﻿using Item.Instance;
+
+namespace Inventory
 {
     /// <summary>
     /// UIのプロバイダー（UIから情報を 渡す/受け取る）
@@ -10,10 +12,25 @@
         //TODO : 下記を実装
         //・インベントリの中身を全渡しししてくれるメソッド
         //・インベントリの特定の場所を置き換える
-        //・軽いトランザクション処理
-        //・
-        //・
+        //・軽いトランザクション処理（マネージャー側）
         
         //TODO:インベントリのマネージャーを作って、そこが全部管理、プロバイダーは更新を受け入れるだけ。
+        
+        /// <summary>
+        /// [インターフェースにより実装]
+        /// インベントリの中身をGetします。
+        /// </summary>
+        /// <returns>インベントリの配列</returns>
+        ItemInstance[] GetAllInventoryItems();
+        
+        /// <summary>
+        /// [インターフェースにより実装]
+        /// インベントリの指定indexの値を置き換えます。
+        /// </summary>
+        /// <param name="item">アイテムインスタンス</param>
+        /// <param name="index">書き換える場所</param>
+        /// <returns>成功したか</returns>
+        bool SetItem(ItemInstance item, int index);
+        
     }
 }

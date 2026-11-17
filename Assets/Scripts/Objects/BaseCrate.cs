@@ -1,6 +1,7 @@
 using System;
 using Inventory;
 using Item.Factory.lootTable;
+using Item.Instance;
 using UnityEngine;
 
 public class BaseCrate : MonoBehaviour , IInteraction , IPlayerStateChangeRequester , IInventoryUIProvider
@@ -56,5 +57,15 @@ public class BaseCrate : MonoBehaviour , IInteraction , IPlayerStateChangeReques
     {
         stateChangeRelay =  newStateChangeRelay;
     }
-    
+
+    public ItemInstance[] GetAllInventoryItems()
+    {
+        return crateInventory;
+    }
+
+    public bool SetItem(ItemInstance item, int index)
+    {
+        crateInventory[index] = item;
+        return true;
+    }
 }
