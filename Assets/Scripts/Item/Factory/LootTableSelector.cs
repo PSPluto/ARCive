@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Item.Database;
+using Item.Factory.lootTable;
+using UnityEngine;
 
-namespace Item
+namespace Item.Factory
 {
     public class LootTableSelector
     {

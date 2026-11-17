@@ -1,4 +1,6 @@
 using Item;
+using Item.Factory;
+using Item.Factory.lootTable;
 using UnityEngine;
 using Item.Instance;
 
@@ -13,8 +15,7 @@ namespace ArcDebug
         [ContextMenu("アイテム生成を実行 x1")]
         private void CreateItem()
         {
-            var factory = new ItemFactory();
-            ItemInstance instance = factory.CreateItemInstance(lootTable, lootValueBias);
+            ItemInstance instance = Item.Factory.ItemFactory.CreateItemInstance(lootTable, lootValueBias);
 
             if (instance == null)
             {

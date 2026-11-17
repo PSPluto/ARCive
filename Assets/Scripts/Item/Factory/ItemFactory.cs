@@ -1,11 +1,12 @@
-using UnityEngine;
 using Item.Database;
+using Item.Factory.lootTable;
+using UnityEngine;
 
-namespace Item
+namespace Item.Factory
 {
-    public class ItemFactory
+    public static class ItemFactory
     {
-        private readonly LootTableSelector _lootTableSelector = new LootTableSelector();
+        private static readonly LootTableSelector LootTableSelector = new LootTableSelector();
 
         /// <summary>
         /// lootTableと戦利品価値の重み から実際にアイテムを生成してリターンします。
@@ -13,7 +14,7 @@ namespace Item
         /// <param name="lootTable"></param>
         /// <param name="lootValueBias"></param>
         /// <returns></returns>
-        public Instance.ItemInstance CreateItemInstance(LootTable lootTable, float lootValueBias)
+        public static Instance.ItemInstance CreateItemInstance(LootTable lootTable, float lootValueBias)
         {
             if (lootTable == null || lootTable.Entries == null || lootTable.Entries.Count == 0)
             {
@@ -21,7 +22,7 @@ namespace Item
                 return null;
             }
 
-            var hitId = _lootTableSelector.SelectItemId(lootTable, lootValueBias);
+            var hitId = LootTableSelector.SelectItemId(lootTable, lootValueBias);
 
             if (ItemDatabaseManager.Instance.Database.TryGet(hitId, out var itemData))
             {
