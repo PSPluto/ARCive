@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerInteraction interact;
     [SerializeField] private StateSettingsDatabase stateSettingsDatabase;
     [SerializeField] private PlayerAim aim;
+    [SerializeField] private PlayerInventory inventory;
 
     // ==================== State ====================
     public PlayerState currentState { get; private set; } = PlayerState.Normal;
@@ -60,7 +62,7 @@ public class Player : MonoBehaviour
             return;
         }
         // インタラクトを実行
-        interact.Interact();
+        interact.Interact(inventory);
     }
 
     /// <summary>

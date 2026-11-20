@@ -1,5 +1,7 @@
+using DefaultNamespace;
+
 public interface IInteraction
 {
     
-    public void Interact();
+    public void Interact(PlayerInventory playerInventory);
 }

@@ -1446,7 +1446,7 @@ HingeJoint:
     targetVelocity: 0
     force: 0
     freeSpin: 0
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
@@ -1736,7 +1736,7 @@ HingeJoint:
     targetVelocity: 0
     force: 0
     freeSpin: 0
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
@@ -2147,6 +2147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ReticleHUD
   targetProvider: {fileID: 330585549}
   _camera: {fileID: 330585545}
+  time: 0.1
 --- !u!4 &686229876
 Transform:
   m_ObjectHideFlags: 0
@@ -2400,7 +2401,7 @@ HingeJoint:
     targetVelocity: 0
     force: 0
     freeSpin: 0
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
@@ -2949,6 +2950,7 @@ GameObject:
   - component: {fileID: 844013031}
   - component: {fileID: 844013032}
   - component: {fileID: 844013033}
+  - component: {fileID: 844013034}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3058,6 +3060,7 @@ MonoBehaviour:
   interact: {fileID: 844013032}
   stateSettingsDatabase: {fileID: 844013030}
   aim: {fileID: 844013033}
+  inventory: {fileID: 844013034}
 --- !u!114 &844013029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3129,6 +3132,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAim
   targetProvider: {fileID: 330585549}
   myRigidBody: {fileID: 844013025}
+--- !u!114 &844013034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844013021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c9cf34bc024411921d6dcd5c1fb4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.PlayerInventory
 --- !u!1 &905273267
 GameObject:
   m_ObjectHideFlags: 0

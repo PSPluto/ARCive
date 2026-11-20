@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using Inventory;
 using Item.Factory.lootTable;
 using Item.Instance;
@@ -16,17 +17,19 @@ public class BaseCrate : MonoBehaviour , IInteraction , IPlayerStateChangeReques
     [SerializeField] private PlayerState requestStateRef;
     public PlayerState requestState { get => requestStateRef;  set => requestStateRef = value; }
 
-    public void Interact()
+    public void Interact(PlayerInventory playerInventory)
     {
         Debug.Log("コンテナがインタラクトされた");
         // State変更の要求
         RequestStateChange(requestState);
         
+        //アイテムを生成
         for(int i = 0; i < crateInventory.Length; i++)
         {
             // null合体演算子：?? 左辺がnullの場合は右辺の値を使うやつ(追記:使うのやめた。)
             crateInventory[i] = Item.Factory.ItemFactory.CreateItemInstance(lootSettings.lootTable,useLootValueBiasOverride? lootValueBiasOverride :lootSettings.lootDefaultBias);
         }
+        
 
     }
 

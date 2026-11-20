@@ -10,19 +10,13 @@ namespace Item.Instance
 
         public void ChangeDurabilityValue(int value)
         {
-            CurrentDurability = UnityEngine.Mathf.Clamp(
-                value,
-                0,
-                durableData.MaxDurability);
+            CurrentDurability = UnityEngine.Mathf.Clamp(value, 0, durableData.MaxDurability);
         }
         
         public DurableInstance(DurableData definition, int currentDurability) : base(definition, 1)
         {
             durableData = definition;
-            CurrentDurability = UnityEngine.Mathf.Clamp(
-                currentDurability,
-                0,
-                durableData.MaxDurability);
+            CurrentDurability = UnityEngine.Mathf.Clamp(currentDurability, 1, durableData.MaxDurability);
         }
     }
 }

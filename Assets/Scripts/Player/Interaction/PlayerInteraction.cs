@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -15,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
 
     
 
-    public void Interact()
+    public void Interact(PlayerInventory  playerInventory)
     { 
         if (_targetObj == null) return;
         if (_targetObjectData.PlayerStateChangeRequester !=  null)
@@ -24,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
             _targetObjectData.PlayerStateChangeRequester.SetStateChangeRelay(stateChangeRelay);
         }
         
-        _targetObjectData.Interaction.Interact();
+        _targetObjectData.Interaction.Interact(playerInventory);
     }
 
     private void Update()
