@@ -26,6 +26,11 @@ namespace Item.Instance
                 definition.MaxStackSize);
         }
 
+        public ItemInstance Clone()
+        {
+            return new ItemInstance(Definition, StackCount);
+        }
+        
         /// <summary>
         /// スタック数をセットします
         /// </summary>
