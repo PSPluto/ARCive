@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Item.Instance;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using static GameUtility;
@@ -52,22 +53,24 @@ namespace Inventory
         /// <param name="toInventory"></param>
         /// <param name="toIndex"></param>
         /// <returns></returns>
-        public bool MoveItems( in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
+        public bool MoveItems( [NotNull] in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
         {
             // 簡易バリデーションチェック
+            if (fromInventory == null || toInventory == null) throw new NullReferenceException("インベントリが指定されていません。");
             if ((!IsInRange(fromIndex, 0, fromInventory.Length-1) || !IsInRange(toIndex, 0, toInventory.Length-1)))
             {
                 throw new IndexOutOfRangeException("指定インデックスがインベントリ範囲外です");
-                return false;
             }
-            
-
             
             // どの処理を行うことになるか判定
             if (fromInventory[fromIndex].ID != toInventory[toIndex].ID)
             {
                 // IDが違うので、交換
                 SwapItems(fromInventory, fromIndex, toInventory, toIndex);
+            }
+            else
+            {
+                
             }
             //TODO: 他の処理
 
