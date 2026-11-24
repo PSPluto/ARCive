@@ -18,7 +18,7 @@ namespace Inventory
         public static InventoryManager Instance;
 
         // 変更データのリスト
-        List<ChangeData> changeList =  new List<ChangeData>();
+        private List<ChangeData> changeList =  new List<ChangeData>();
         
         private void Awake()
         {
@@ -54,8 +54,8 @@ namespace Inventory
         /// <returns></returns>
         public bool MoveItems( in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
         {
-            // まずは不正値チェック
-            if (IsInRange(fromIndex, 0, fromInventory.Length-1) || IsInRange(toIndex, 0, toInventory.Length-1))
+            // 簡易バリデーションチェック
+            if ((!IsInRange(fromIndex, 0, fromInventory.Length-1) || !IsInRange(toIndex, 0, toInventory.Length-1)))
             {
                 throw new IndexOutOfRangeException("指定インデックスがインベントリ範囲外です");
                 return false;
@@ -67,20 +67,28 @@ namespace Inventory
             if (fromInventory[fromIndex].ID != toInventory[toIndex].ID)
             {
                 // IDが違うので、交換
-                SwapItems();
+                SwapItems(fromInventory, fromIndex, toInventory, toIndex);
             }
             //TODO: 他の処理
+
+            Commit();
             return false;
         }
         
-        private void SwapItems()
+        /// <summary>
+        /// アイテムを何もせず入れ替える
+        /// </summary>
+        private void SwapItems(ItemInstance[] fromInventory, int fromIndex, ItemInstance[] toInventory, int toIndex)
         {
-            changeList.Add(new ChangeData());
+            changeList.Add(new ChangeData(fromInventory, fromIndex, toInventory[toIndex]));
+            changeList.Add(new ChangeData(toInventory, toIndex, fromInventory[fromIndex]));
         }
+        
+        //TODO:トランザクション処理関係は後で別クラスに分ける。SwapItems()なども含めて。
 
         private bool Commit()
         {
-            //変更を確定する。
+            //TODO:変更を確定する。
             return true;
         }
     }
@@ -100,7 +108,7 @@ namespace Inventory
         /// <param name="inventory">対象のインベントリ</param>
         /// <param name="index">対象のIndex</param>
         /// <param name="itemInstance">このアイテムで置き換える</param>
-        ChangeData(ItemInstance[] inventory, int index, ItemInstance itemInstance)
+        public ChangeData(ItemInstance[] inventory, int index, ItemInstance itemInstance)
         {
             targetInventory = inventory;
             targetIndex = index;
