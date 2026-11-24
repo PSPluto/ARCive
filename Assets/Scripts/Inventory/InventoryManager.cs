@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Item.Instance;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,8 +14,12 @@ namespace Inventory
         public ItemInstance[] PlayerInventory { get; private set; }
         public ItemInstance[] OpenedInventory { get; private set; }
 
+        // 仮でstatic化
         public static InventoryManager Instance;
 
+        // 変更データのリスト
+        List<ChangeData> changeList =  new List<ChangeData>();
+        
         private void Awake()
         {
             if(Instance)return;
@@ -47,49 +52,59 @@ namespace Inventory
         /// <param name="toInventory"></param>
         /// <param name="toIndex"></param>
         /// <returns></returns>
-        public bool MoveItems( ref ItemInstance[] fromInventory, int fromIndex, ref ItemInstance[] toInventory, int toIndex)
+        public bool MoveItems( in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
         {
-            var from= fromInventory[fromIndex];
-            var to= toInventory[toIndex];
-
-            var tmpFrom = from.Clone();
-            var tmpTo = to.Clone();
-            
-            // 不正値チェック
+            // まずは不正値チェック
             if (IsInRange(fromIndex, 0, fromInventory.Length-1) || IsInRange(toIndex, 0, toInventory.Length-1))
             {
                 throw new IndexOutOfRangeException("指定インデックスがインベントリ範囲外です");
                 return false;
             }
             
+
+            
             // どの処理を行うことになるか判定
-            if (tmpFrom.ID != tmpTo.ID)
+            if (fromInventory[fromIndex].ID != toInventory[toIndex].ID)
             {
                 // IDが違うので、交換
-                SwapItems(tmpFrom, tmpTo);
+                SwapItems();
             }
             //TODO: 他の処理
             return false;
         }
-
-        /// <summary>
-        /// 2つのアイテムを入れ替える
-        /// </summary>
-        /// <param name="tmpFrom"></param>
-        /// <param name="tmpTo"></param>
-        /// <returns>  </returns>
-        private (ItemInstance From, ItemInstance To) SwapItems(ItemInstance tmpFrom, ItemInstance tmpTo)
+        
+        private void SwapItems()
         {
-            // // Pythonみたいに値入れ替えができる。...けど今回使わなくていいかも
-            // (tmpTo, tmpFrom) = (tmpFrom, tmpTo);
-
-            // 値を入れ替えて返す
-            return (From:tmpTo, To:tmpFrom);
+            changeList.Add(new ChangeData());
         }
 
         private bool Commit()
         {
-            
+            //変更を確定する。
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 変更データの構造体(クラスでもいいのかな)
+    /// </summary>
+    public struct ChangeData
+    {
+        public ItemInstance[] targetInventory;
+        public int targetIndex;
+        public ItemInstance newItemInstance;
+
+        /// <summary>
+        /// 変更データのコンストラクタ
+        /// </summary>
+        /// <param name="inventory">対象のインベントリ</param>
+        /// <param name="index">対象のIndex</param>
+        /// <param name="itemInstance">このアイテムで置き換える</param>
+        ChangeData(ItemInstance[] inventory, int index, ItemInstance itemInstance)
+        {
+            targetInventory = inventory;
+            targetIndex = index;
+            newItemInstance = itemInstance;
         }
     }
 }
