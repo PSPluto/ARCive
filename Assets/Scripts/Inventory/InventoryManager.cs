@@ -56,7 +56,7 @@ namespace Inventory
         public bool MoveItems( [NotNull] in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
         {
             // 簡易バリデーションチェック
-            if (fromInventory == null || toInventory == null) throw new NullReferenceException("インベントリが指定されていません。");
+            if (fromInventory == null || toInventory == null) throw new ArgumentNullException(nameof(fromInventory));
             if ((!IsInRange(fromIndex, 0, fromInventory.Length-1) || !IsInRange(toIndex, 0, toInventory.Length-1)))
             {
                 throw new IndexOutOfRangeException("指定インデックスがインベントリ範囲外です");
@@ -68,16 +68,42 @@ namespace Inventory
                 // IDが違うので、交換
                 SwapItems(fromInventory, fromIndex, toInventory, toIndex);
             }
-            else
+            else if (toInventory[toIndex].StackCount < toInventory[toIndex].Definition.MaxStackSize)
             {
-                
+                // スタック数が最大スタック数よりも小さい 処理
+                StackItems(fromInventory, fromIndex, toInventory, toIndex);
             }
             //TODO: 他の処理
 
             Commit();
             return false;
         }
-        
+
+        /// <summary>
+        /// アイテムをまとめる。余った分は元の場所に戻す
+        /// </summary>
+        private void StackItems(ItemInstance[] fromInventoryCopy, int copyFromIndex, ItemInstance[] toInventoryCopy, int copyToIndex)
+        {
+            var fromStack =  fromInventoryCopy[copyFromIndex].StackCount;
+            var toStack =  toInventoryCopy[copyToIndex].StackCount;
+            var toMaxStack = toInventoryCopy[copyToIndex].Definition.MaxStackSize;
+
+            toStack += fromStack;
+            var remaining =  toStack - toMaxStack;
+            if (remaining > 0)
+            {
+                // 1以上多い場合、
+                fromInventoryCopy[copyFromIndex].ChangeStackCount(remaining);
+                changeList.Add(new ChangeData(fromInventoryCopy, copyFromIndex, toInventoryCopy[copyToIndex]));
+                
+            }
+            else
+            {
+                changeList.Add(new ChangeData(fromInventoryCopy, copyFromIndex, null));
+            }
+            changeList.Add(new ChangeData(toInventoryCopy, copyToIndex, fromInventoryCopy[copyFromIndex]));
+        }
+
         /// <summary>
         /// アイテムを何もせず入れ替える
         /// </summary>
