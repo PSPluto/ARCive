@@ -11,16 +11,15 @@ namespace Inventory
     // TODO: 最終的にはモノビヘイビアによるインスタンス化をやめる
     public class InventoryManager :  MonoBehaviour
     {
+        // == 参照
+        private readonly InventoryOperator _inventoryOperator =  new InventoryOperator();
+        
         // TODO:最終的にはこれをUIに持ってもらう。今はUIがないのでここにおいておく
         public ItemInstance[] PlayerInventory { get; private set; }
         public ItemInstance[] OpenedInventory { get; private set; }
 
-        // 仮でstatic化
+        // 仮でシングルトン化
         public static InventoryManager Instance;
-
-        // 変更データのリスト
-        private List<ChangeInventoryData> _inventoryChangeList = new List<ChangeInventoryData>();
-        private List<ChangeItemStackData> _itemStackChangeList = new List<ChangeItemStackData>();
         
         private void Awake()
         {
@@ -28,23 +27,7 @@ namespace Inventory
             
             Instance = this;
         }
-
-        /// <summary>
-        /// プレイヤーのインベントリの参照を変更する
-        /// </summary>
-        /// <param name="playerInventory"></param>
-        public void SetPlayerInventory(ItemInstance[] playerInventory)
-        {
-            PlayerInventory = playerInventory;
-        }
-        /// <summary>
-        /// もう一方のインベントリの参照を変更する
-        /// </summary>
-        /// <param name="openedInventory"></param>
-        public void SetOpenedInventory(ItemInstance[] openedInventory)
-        {
-            OpenedInventory = openedInventory;
-        }
+        
         
         /// <summary>
         /// アイテムを移動する。（ドラッグ移動想定）行先にアイテムがあれば入れ替える。行先のアイテムが同種、かつ満タンでなければ、できる限りまとめ、残りを戻す
@@ -54,9 +37,22 @@ namespace Inventory
         /// <param name="toInventory"></param>
         /// <param name="toIndex"></param>
         /// <returns></returns>
-        public bool MoveItems( in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
+        public void MoveItems( in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
         {
-            // 簡易バリデーションチェック
+            // バリデーションチェック
+            if (!CheckValidation(fromInventory, fromIndex, toInventory, toIndex)) { return; }
+            // 元の位置と先の位置が同じだった場合、なんもないので早期return
+            if (fromInventory == toInventory && fromIndex == toIndex) { return; }
+            
+            // どの処理を行うことになるか判定 
+            Action action = DetermineOperation(fromInventory,fromIndex,toInventory,toIndex);
+            // 実行
+            action?.Invoke();
+            _inventoryOperator.Commit();
+        }
+
+        private bool CheckValidation(ItemInstance[] fromInventory, int fromIndex, ItemInstance[] toInventory, int toIndex)
+        {
             if (fromInventory == null) throw new ArgumentNullException(nameof(fromInventory));
             if (toInventory == null) throw new ArgumentNullException(nameof(toInventory));
             if ((!IsInRange(fromIndex, 0, fromInventory.Length-1) || !IsInRange(toIndex, 0, toInventory.Length-1)))
@@ -67,127 +63,33 @@ namespace Inventory
             {
                 throw new ArgumentException("指定インデックスの値が不正です");
             }
-            
-            // どの処理を行うことになるか判定
-            if (fromInventory == toInventory && fromIndex == toIndex)
+            return true;
+        }
+
+        private Action DetermineOperation( ItemInstance[] fromInventory, int fromIndex,  ItemInstance[] toInventory, int toIndex)
+        {
+            if (toInventory[toIndex] == null || fromInventory[fromIndex].ID != toInventory[toIndex].ID)
             {
-                //同じ場所に移動したなら不具合を防ぐために早期リターン
-                return true;
-                
-            }
-            else if (toInventory[toIndex] == null || fromInventory[fromIndex].ID != toInventory[toIndex].ID)
-            {
-                // IDが違うので交換
-                SwapItems(fromInventory, fromIndex, toInventory, toIndex);
+                // IDが違った場合(交換処理)
+                return () => _inventoryOperator.SwapItems(fromInventory, fromIndex, toInventory, toIndex);
             }
             else if (toInventory[toIndex].StackCount < toInventory[toIndex].Definition.MaxStackSize)
             {
-                // スタック数が最大スタック数よりも小さい 
-                StackItems(fromInventory, fromIndex, toInventory, toIndex);
+                // ID同じ、かつ行先のスタック数に余裕があった場合(スタック処理)
+                return () => _inventoryOperator.StackItems(fromInventory, fromIndex, toInventory, toIndex);
             }
-            //TODO: 他の処理
-
-            Commit();
-            return false;
-        }
-
-        /// <summary>
-        /// アイテムをまとめる。余った分は元の場所に戻す
-        /// </summary>
-        private void StackItems(in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
-        {
-            // コードを長くしないために
-            var fromInstance = fromInventory[fromIndex];
-            var toInstance = toInventory[toIndex];
-
-            // 計算
-            var fromStack = fromInstance.StackCount;
-            var toStack = toInstance.StackCount + fromInstance.StackCount;
-            var remaining = toStack - toInstance.Definition.MaxStackSize;
-            if (remaining > 0)
-            {
-                toStack = (toInstance.Definition.MaxStackSize);
-                fromStack = remaining;
-            }
-            else
-            {
-                fromStack = 0;
-            }
-            
-            // Commit処理
-            _itemStackChangeList.Add(new ChangeItemStackData(toInventory, toIndex, toStack));
-            if (fromStack <= 0)
-            {
-                _inventoryChangeList.Add(new ChangeInventoryData(fromInventory, fromIndex, null));
-            }
-            else
-            {
-                _itemStackChangeList.Add(new ChangeItemStackData(fromInventory, fromIndex, fromStack));
-            }
-        }
-
-        /// <summary>
-        /// アイテムを何もせず入れ替える
-        /// </summary>
-        private void SwapItems(in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
-        {
-            _inventoryChangeList.Add(new ChangeInventoryData(fromInventory, fromIndex, toInventory[toIndex]));
-            _inventoryChangeList.Add(new ChangeInventoryData(toInventory, toIndex, fromInventory[fromIndex]));
+            // 実行できる操作がなかった。
+            return null;
         }
         
-        //TODO:トランザクション処理関係は後で別クラスに分ける。SwapItems()なども含めて。
-
-        private bool Commit()
+        // インベントリの配列をSetする用メソッドたち
+        public void SetPlayerInventory(ItemInstance[] playerInventory)
         {
-            //TODO:変更を確定する。
-            foreach (var item in _itemStackChangeList)
-            {
-                item.targetInventory[item.targetIndex].ChangeStackCount(item.afterStackSize);
-            }
-            foreach (var changeData in _inventoryChangeList)
-            {
-                changeData.targetInventory[changeData.targetIndex] = changeData.afterItemInstance;
-            }
-            
-            _itemStackChangeList.Clear();
-            _inventoryChangeList.Clear();
-            return true;
+            PlayerInventory = playerInventory;
         }
-    }
-
-    /// <summary>
-    /// 変更データの構造体(クラスでもいいのかな)
-    /// </summary>
-    public struct ChangeInventoryData
-    {
-        public ItemInstance[] targetInventory;
-        public int targetIndex;
-        public ItemInstance afterItemInstance;
-
-        /// <summary>
-        /// 変更データのコンストラクタ
-        /// </summary>
-        /// <param name="inventory">対象のインベントリ</param>
-        /// <param name="index">対象のIndex</param>
-        /// <param name="itemInstance">このアイテムで置き換える</param>
-        public ChangeInventoryData(ItemInstance[] inventory, int index, ItemInstance itemInstance)
+        public void SetOpenedInventory(ItemInstance[] openedInventory)
         {
-            targetInventory = inventory;
-            targetIndex = index;
-            afterItemInstance = itemInstance;
-        }
-    }
-    public struct ChangeItemStackData
-    {
-        public ItemInstance[] targetInventory;
-        public int targetIndex;
-        public int afterStackSize;
-
-        public ChangeItemStackData(ItemInstance[] inventory, int index, int stackSize)
-        {
-            targetInventory = inventory;
-            targetIndex = index;
-            afterStackSize = stackSize;
+            OpenedInventory = openedInventory;
         }
     }
 }
