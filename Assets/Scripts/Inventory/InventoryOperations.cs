@@ -139,13 +139,50 @@ namespace Inventory
 
             int originalCount = sourceItem.StackCount;
             int remainingCount = originalCount;
-            int maxStackSize = sourceItem.Definition.MaxStackSize;
+            int firstEmptyIndex = -1;
 
-            if (maxStackSize < 1)
-                return new InventoryOperationResult(InventoryOperationStatus.InvalidArgument);
-
-            // Fill existing compatible stacks first.
+            // Calculate how much can be added to existing stacks without changing anything.
             for (int i = 0; i < destination.Length && remainingCount > 0; i++)
+            {
+                if (ReferenceEquals(source, destination) && i == sourceIndex)
+                    continue;
+
+                ItemInstance targetItem = destination[i];
+                if (targetItem == null)
+                {
+                    if (firstEmptyIndex < 0)
+                        firstEmptyIndex = i;
+                    continue;
+                }
+
+                if (!CanStack(sourceItem, targetItem))
+                    continue;
+
+                int capacity = targetItem.Definition.MaxStackSize - targetItem.StackCount;
+                if (capacity > 0)
+                    remainingCount -= Math.Min(remainingCount, capacity);
+            }
+
+            int movedToExistingStacks = originalCount - remainingCount;
+            bool canUseEmptySlot = remainingCount > 0 && firstEmptyIndex >= 0;
+
+            if (movedToExistingStacks == 0 && !canUseEmptySlot)
+                return new InventoryOperationResult(InventoryOperationStatus.NoSpace);
+
+            // Prepare a split instance before mutating any inventory data.
+            ItemInstance splitStack = null;
+            if (canUseEmptySlot && movedToExistingStacks > 0)
+            {
+                splitStack = sourceItem.Definition.CreateInstance();
+                if (splitStack == null)
+                    return new InventoryOperationResult(InventoryOperationStatus.InvalidArgument);
+
+                splitStack.ChangeStackCount(remainingCount);
+            }
+
+            // Commit the additions to existing stacks.
+            int countToDistribute = movedToExistingStacks;
+            for (int i = 0; i < destination.Length && countToDistribute > 0; i++)
             {
                 if (ReferenceEquals(source, destination) && i == sourceIndex)
                     continue;
@@ -158,46 +195,22 @@ namespace Inventory
                 if (capacity <= 0)
                     continue;
 
-                int movedCount = Math.Min(remainingCount, capacity);
-                targetItem.ChangeStackCount(targetItem.StackCount + movedCount);
-                remainingCount -= movedCount;
+                int addedCount = Math.Min(countToDistribute, capacity);
+                targetItem.ChangeStackCount(targetItem.StackCount + addedCount);
+                countToDistribute -= addedCount;
             }
 
-            // Put the remainder into the first empty slot, if one exists.
-            if (remainingCount > 0)
+            if (canUseEmptySlot)
             {
-                for (int i = 0; i < destination.Length; i++)
-                {
-                    if (ReferenceEquals(source, destination) && i == sourceIndex)
-                        continue;
+                if (movedToExistingStacks == 0)
+                    destination[firstEmptyIndex] = sourceItem;
+                else
+                    destination[firstEmptyIndex] = splitStack;
 
-                    if (destination[i] != null)
-                        continue;
-
-                    if (remainingCount == originalCount)
-                    {
-                        // No stack was filled: transfer the original instance.
-                        destination[i] = sourceItem;
-                    }
-                    else
-                    {
-                        // A stack was filled: create a separate stack for the remainder.
-                        // ItemData is the shared definition; runtime state is represented
-                        // by the new ItemInstance.
-                        ItemInstance splitStack = sourceItem.Definition.CreateInstance();
-                        splitStack.ChangeStackCount(remainingCount);
-                        destination[i] = splitStack;
-                    }
-
-                    remainingCount = 0;
-                    break;
-                }
+                remainingCount = 0;
             }
 
             int movedTotal = originalCount - remainingCount;
-            if (movedTotal == 0)
-                return new InventoryOperationResult(InventoryOperationStatus.NoSpace);
-
             if (remainingCount == 0)
                 source[sourceIndex] = null;
             else
