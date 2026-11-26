@@ -63,13 +63,19 @@ namespace Inventory
             {
                 throw new IndexOutOfRangeException("指定インデックスがインベントリ範囲外です");
             }
-            if (fromInventory[fromIndex] == null || toInventory[toIndex] == null)
+            if (fromInventory[fromIndex] == null)
             {
                 throw new ArgumentException("指定インデックスの値が不正です");
             }
             
             // どの処理を行うことになるか判定
-            if (fromInventory[fromIndex].ID != toInventory[toIndex].ID)
+            if (fromInventory == toInventory && fromIndex == toIndex)
+            {
+                //同じ場所に移動したなら不具合を防ぐために早期リターン
+                return true;
+                
+            }
+            else　if (fromInventory[fromIndex].ID != toInventory[toIndex].ID)
             {
                 // IDが違うので交換
                 SwapItems(fromInventory, fromIndex, toInventory, toIndex);
