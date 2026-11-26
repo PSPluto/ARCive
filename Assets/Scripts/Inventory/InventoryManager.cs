@@ -75,7 +75,7 @@ namespace Inventory
                 return true;
                 
             }
-            else　if (fromInventory[fromIndex].ID != toInventory[toIndex].ID)
+            else　if (toInventory[toIndex] == null || fromInventory[fromIndex].ID != toInventory[toIndex].ID)
             {
                 // IDが違うので交換
                 SwapItems(fromInventory, fromIndex, toInventory, toIndex);
