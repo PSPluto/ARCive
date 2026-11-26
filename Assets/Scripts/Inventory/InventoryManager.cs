@@ -57,10 +57,15 @@ namespace Inventory
         public bool MoveItems( in ItemInstance[] fromInventory, int fromIndex, in ItemInstance[] toInventory, int toIndex)
         {
             // 簡易バリデーションチェック
-            if (fromInventory == null || toInventory == null) throw new ArgumentNullException();
+            if (fromInventory == null) throw new ArgumentNullException(nameof(fromInventory));
+            if (toInventory == null) throw new ArgumentNullException(nameof(toInventory));
             if ((!IsInRange(fromIndex, 0, fromInventory.Length-1) || !IsInRange(toIndex, 0, toInventory.Length-1)))
             {
                 throw new IndexOutOfRangeException("指定インデックスがインベントリ範囲外です");
+            }
+            if (fromInventory[fromIndex] == null || toInventory[toIndex] == null)
+            {
+                throw new ArgumentException("指定インデックスの値が不正です");
             }
             
             // どの処理を行うことになるか判定
@@ -97,6 +102,10 @@ namespace Inventory
             {
                 toStack = (toInstance.Definition.MaxStackSize);
                 fromStack = remaining;
+            }
+            else
+            {
+                fromStack = 0;
             }
             
             // Commit処理
@@ -135,7 +144,7 @@ namespace Inventory
             }
             
             _itemStackChangeList.Clear();
-            _itemStackChangeList.Clear();
+            _inventoryChangeList.Clear();
             return true;
         }
     }
