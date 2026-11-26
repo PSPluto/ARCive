@@ -184,7 +184,9 @@ namespace Inventory
                         // A stack was filled: create a separate stack for the remainder.
                         // ItemData is the shared definition; runtime state is represented
                         // by the new ItemInstance.
-                        destination[i] = new ItemInstance(sourceItem.Definition, remainingCount);
+                        ItemInstance splitStack = sourceItem.Definition.CreateInstance();
+                        splitStack.ChangeStackCount(remainingCount);
+                        destination[i] = splitStack;
                     }
 
                     remainingCount = 0;
